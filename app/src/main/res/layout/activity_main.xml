@@ -32,6 +32,7 @@
             android:layout_margin="5dp"
             android:layout_weight="0"
             android:background="#FFFFFF"
+            android:onClick="button_new_click"
             app:srcCompat="@mipmap/ic_launcher" />
     </LinearLayout>
 
