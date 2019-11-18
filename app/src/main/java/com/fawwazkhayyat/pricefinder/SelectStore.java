@@ -1,21 +1,56 @@
 package com.fawwazkhayyat.pricefinder;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 public class SelectStore extends AppCompatActivity {
     Spinner spinner_selectStore;
-    AppFirestoreDatabase firestoreDatabase;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_store);
 
-        firestoreDatabase = new AppFirestoreDatabase();
         spinner_selectStore = findViewById(R.id.spinner_selectStore);
-        
+        db = FirebaseFirestore.getInstance();
+        String PATH_COLLECTION_STORES = "stores";
+        db.collection(PATH_COLLECTION_STORES)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                final List usersDocList = task.getResult().getDocuments();
+
+                int length = usersDocList.size();
+                String[] stores = new String[length];
+                for(int i= 0;i<length;i++){
+                    stores[i] = ((QueryDocumentSnapshot)usersDocList.get(i)).getId();
+                }
+                setSpinnerAdapter(stores);
+            }
+        });
+    }
+
+    private void setSpinnerAdapter(Object[] stores){
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this ,
+                R.layout.support_simple_spinner_dropdown_item,
+                stores);
+        spinner_selectStore.setAdapter(arrayAdapter);
     }
 }
