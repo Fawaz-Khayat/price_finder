@@ -41,8 +41,8 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
 
         Product product = products.get(position);
         textView_name.setText(product.getName());
-        textView_quantity.setText(String.valueOf(product.getQuantity()));
-        textView_price.setText(String.valueOf(product.getPrice()));
+        textView_quantity.setText(String.valueOf(product.getQuantity()) + "x");
+        textView_price.setText("$" + String.valueOf(product.getPrice()));
         textView_total.setText("$"+(product.getPrice()*product.getQuantity()));
 
         imageButton_edit.setOnClickListener(new View.OnClickListener() {
