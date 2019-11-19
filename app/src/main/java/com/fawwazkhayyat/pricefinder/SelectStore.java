@@ -3,6 +3,7 @@ package com.fawwazkhayyat.pricefinder;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -74,5 +75,13 @@ public class SelectStore extends AppCompatActivity {
                 R.layout.support_simple_spinner_dropdown_item,
                 stores);
         spinner_selectStore.setAdapter(arrayAdapter);
+    }
+
+    public void gotoBasket(View view){
+        final String EXTRA_CODE = "com.fawwazkhayyat.pricefinder";
+        Intent intent = new Intent(this, Basket.class);
+        intent.putExtra(EXTRA_CODE, "NEW");
+
+        startActivity(intent);
     }
 }
