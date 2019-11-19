@@ -1,7 +1,7 @@
 package com.fawwazkhayyat.pricefinder;
 
 public class Product {
-    private int barcode;
+    private long barcode;
     private String name;
     private double price;
     private String picture;
@@ -12,7 +12,7 @@ public class Product {
         this.barcode = barcode;
     }
 
-    public int getBarcode() {
+    public long getBarcode() {
         return barcode;
     }
 
