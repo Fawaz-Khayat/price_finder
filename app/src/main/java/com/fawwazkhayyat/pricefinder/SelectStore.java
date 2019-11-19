@@ -78,9 +78,9 @@ public class SelectStore extends AppCompatActivity {
     }
 
     public void gotoBasket(View view){
-        final String EXTRA_CODE = "com.fawwazkhayyat.pricefinder";
+        final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder";
         Intent intent = new Intent(this, Basket.class);
-        intent.putExtra(EXTRA_CODE, "NEW");
+        intent.putExtra(EXTRA_NAME, "NEW");
 
         startActivity(intent);
     }

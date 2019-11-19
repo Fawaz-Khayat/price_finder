@@ -17,6 +17,14 @@ public class Basket extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
+        final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder";
+        String config;
+        if (savedInstanceState == null){
+            config = getIntent().getStringExtra(EXTRA_NAME);
+            if(config != null && config.equals("NEW")){
+                findViewById(R.id.button_save).setEnabled(false);
+            }
+        }
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
