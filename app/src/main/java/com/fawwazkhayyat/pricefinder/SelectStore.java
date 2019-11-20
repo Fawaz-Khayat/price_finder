@@ -2,28 +2,24 @@ package com.fawwazkhayyat.pricefinder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import java.util.Arrays;
 
-import java.util.List;
 
 public class SelectStore extends AppCompatActivity {
+    final String TAG = "DEBUG_TAG";
     Spinner spinner_selectStore;
     TextView textView_storeInfo;
-    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,47 +29,36 @@ public class SelectStore extends AppCompatActivity {
         spinner_selectStore = findViewById(R.id.spinner_selectStore);
         textView_storeInfo = findViewById(R.id.textView_storeInfo);
 
-        db = FirebaseFirestore.getInstance();
-        String PATH_COLLECTION_STORES = "stores";
-        db.collection(PATH_COLLECTION_STORES)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+        FireStoreViewModel fireStoreViewModel = ViewModelProviders.of(this).get(FireStoreViewModel.class);
+        fireStoreViewModel.getStores().observe(this, stores -> {
+            // update UI
+            Log.d(TAG, "inside observer: " + Arrays.toString(stores));
 
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                final List usersDocList = task.getResult().getDocuments();
+            setSpinnerAdapter(stores);
+            spinner_selectStore.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                int length = usersDocList.size();
-                String[] stores = new String[length];
-                for(int i= 0;i<length;i++){
-                    if(((DocumentSnapshot)usersDocList.get(i)).contains("name"))
-                        stores[i] = ((DocumentSnapshot) usersDocList.get(i)).get("name").toString();
-                    else
-                        stores[i] = ((QueryDocumentSnapshot)usersDocList.get(i)).getId();
+
+                    textView_storeInfo.setText(stores[position].getName());
                 }
-                setSpinnerAdapter(stores);
-                spinner_selectStore.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        String info ="";
-                        if(((DocumentSnapshot)usersDocList.get(position)).contains("address"))
-                            info = ((DocumentSnapshot) usersDocList.get(position)).get("address").toString();
-                        textView_storeInfo.setText(info);
-                    }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
 
-                    }
-                });
-            }
+                }
+            });
         });
     }
-
-    private void setSpinnerAdapter(Object[] stores){
+    private void setSpinnerAdapter(Store[] stores){
+        int numberOfStores = stores.length;
+        String[] storeNames = new String[numberOfStores];
+        for(int i=0;i<numberOfStores;i++){
+            storeNames[i] = stores[i].getName();
+        }
         ArrayAdapter arrayAdapter = new ArrayAdapter(this ,
                 R.layout.support_simple_spinner_dropdown_item,
-                stores);
+                storeNames);
         spinner_selectStore.setAdapter(arrayAdapter);
     }
 
