@@ -22,7 +22,7 @@ public class Basket extends AppCompatActivity {
         if (savedInstanceState == null){
             config = getIntent().getStringExtra(EXTRA_NAME);
             if(config != null && config.equals("NEW")){
-                findViewById(R.id.button_save).setEnabled(false);
+                findViewById(R.id.imageButton_save).setEnabled(false);
             }
         }
 
@@ -44,4 +44,10 @@ public class Basket extends AppCompatActivity {
         recyclerView.setAdapter(new BasketRecyclerViewAdapter(products));
 
     }
+
+    // todo
+    // get list_items from the database
+
+    // todo
+    // implement button to start scanner activity
 }
