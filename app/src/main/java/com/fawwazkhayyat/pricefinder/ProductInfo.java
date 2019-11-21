@@ -28,8 +28,8 @@ public class ProductInfo extends AppCompatActivity {
         fireStoreViewModel.getProduct(storeId, barcode).observe(this, product -> {
             Log.d("DEBUG_TAG", "ProductInfo onCreate: ");
             textView_name.setText(product.getName());
-            textView_description.setText(product.getDescription());
-            textView_price.setText(String.valueOf(product.getPrice()));
+            //textView_description.setText(product.getDescription());
+            textView_price.setText("$"+String.valueOf(product.getPrice()));
         });
 
     }

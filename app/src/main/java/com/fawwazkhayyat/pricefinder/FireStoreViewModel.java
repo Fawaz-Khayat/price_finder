@@ -1,8 +1,6 @@
 package com.fawwazkhayyat.pricefinder;
 //https://developer.android.com/topic/libraries/architecture/viewmodel
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -17,7 +15,6 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class FireStoreViewModel extends ViewModel {
@@ -25,9 +22,27 @@ public class FireStoreViewModel extends ViewModel {
     private FirebaseFirestore db;
     private String PATH_COLLECTION_STORES = "stores";
     private MutableLiveData<Store[]> stores;
+    private MutableLiveData<Product> product;
 
     public FireStoreViewModel() {
         this.db = FirebaseFirestore.getInstance();
+    }
+
+    LiveData<Store[]> getStores(){
+        if (stores == null){
+            stores = new MutableLiveData<>();
+            loadStores();
+        }
+        return stores;
+    }
+
+    LiveData<Product> getProduct(String storeId, String barcode){
+
+        if(product == null){
+            product = new MutableLiveData<>();
+            loadProduct(storeId, barcode);
+        }
+        return product;
     }
 
     private void loadStores(){
@@ -87,11 +102,22 @@ public class FireStoreViewModel extends ViewModel {
                 });
     }
 
-    LiveData<Store[]> getStores(){
-        if (stores == null){
-            stores = new MutableLiveData<>();
-            loadStores();
-        }
-        return stores;
+    private void loadProduct(String storeId, String barcode){
+        db.document("/stores/"+ storeId +"/products/" + barcode)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        Product tempProduct = new Product(barcode);
+                        DocumentSnapshot docResult = task.getResult();
+                        if(docResult.contains("name"))
+                            tempProduct.setName((String) docResult.get("name"));
+                        if(docResult.contains("price"))
+                            tempProduct.setPrice((double)docResult.getDouble("price"));
+
+                        Log.d("DEBUG_TAG", "loadProduct onComplete:");
+                        product.postValue(tempProduct);
+                    }
+                });
     }
 }
