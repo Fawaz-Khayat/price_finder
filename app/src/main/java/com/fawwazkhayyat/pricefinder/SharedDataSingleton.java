@@ -34,4 +34,8 @@ class SharedDataSingleton {
         saveDateFormat.setTimeZone(timeZone);
         newDate = saveDateFormat.format(calendar.getTime());
     }
+
+    public String getNewDate(){
+        return newDate;
+    }
 }

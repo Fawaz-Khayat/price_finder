@@ -24,7 +24,9 @@ public class ProductInfo extends AppCompatActivity {
     double price, tax, total;
     int quantity;
 
-    String date, time;
+    //todo
+    //get the date from singleton
+    String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +49,20 @@ public class ProductInfo extends AppCompatActivity {
         });
     }
 
-    public void imageButton_decrease_click(View view){
+    public void decrease_click(View view){
         if(quantity>0)
             quantity--;
         textView_quantity.setText(String.valueOf(quantity));
         total = quantity * price;
     }
-    public void imageButton_increase_click(View view){
+    public void increase_click(View view){
         quantity++;
         textView_quantity.setText(String.valueOf(quantity));
         total = quantity * price;
     }
-    public void imageButton_addToBasket_click(View view){
+    public void addToBasket_click(View view){
+        SharedDataSingleton singleton = SharedDataSingleton.getInstance();
+        String date = singleton.getNewDate();
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -69,8 +73,7 @@ public class ProductInfo extends AppCompatActivity {
 
         // save to temporary list
         ContentValues insertData = new ContentValues(6);
-        insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_DATE, date);
-        insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_TIME, time);
+        insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_DATE_TIME, date);
         insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_STORE_ID, storeId);
         insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_BARCODE, barcode);
         insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_PRICE, price);
