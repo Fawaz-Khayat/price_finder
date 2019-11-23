@@ -47,15 +47,13 @@ class SQLiteContract {
         static final String TABLE_NAME = "lists";
         static final String COLUMN_NAME_LIST_ID = "_id";
         static final String COLUMN_NAME_STORE_ID = "store_id";
-        static final String COLUMN_NAME_DATE = "date";
-        static final String COLUMN_NAME_TIME = "time";
+        static final String COLUMN_NAME_DATE_TIME = "date_time";
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         COLUMN_NAME_LIST_ID + " INTEGER NOT NULL PRIMARY KEY, " +
                         COLUMN_NAME_STORE_ID + " TEXT NOT NULL, " +
-                        COLUMN_NAME_DATE + " TEXT, " +
-                        COLUMN_NAME_TIME + " TEXT, " +
+                        COLUMN_NAME_DATE_TIME + " TEXT, " +
 
                         //FOREIGN KEY(store_id) REFERENCES stores(store_id)
                         "FOREIGN KEY(" + COLUMN_NAME_STORE_ID + ") REFERENCES " +
@@ -100,8 +98,7 @@ class SQLiteContract {
 
     static class TemporaryList{
         static final String TABLE_NAME = "temporary_list";
-        static final String COLUMN_NAME_DATE = "date";
-        static final String COLUMN_NAME_TIME = "time";
+        static final String COLUMN_NAME_DATE_TIME = "date";
         static final String COLUMN_NAME_STORE_ID = "store_id";
         static final String COLUMN_NAME_BARCODE = "barcode";
         static final String COLUMN_NAME_PRICE = "price";
@@ -109,8 +106,7 @@ class SQLiteContract {
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
-                        COLUMN_NAME_DATE + " TEXT NOT NULL, " +
-                        COLUMN_NAME_TIME + " TEXT NOT NULL, " +
+                        COLUMN_NAME_DATE_TIME + " TEXT NOT NULL, " +
                         COLUMN_NAME_STORE_ID + " TEXT NOT NULL, " +
                         COLUMN_NAME_BARCODE + " TEXT NOT NULL, " +
                         COLUMN_NAME_PRICE + " REAL NOT NULL, " +
