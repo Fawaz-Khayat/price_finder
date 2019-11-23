@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +18,13 @@ import java.util.Arrays;
 
 
 public class SelectStore extends AppCompatActivity {
+    //final String EXTRA_BASKET_TYPE = "com.fawwazkhayyat.pricefinder.BASKET_TYPE";
+    static final String EXTRA_STORE_ID = "com.fawwazkhayyat.pricefinder.STORE_ID";
     final String TAG = "DEBUG_TAG";
+
+    private String storeId;
+
+
     Spinner spinner_selectStore;
     TextView textView_storeInfo;
 
@@ -38,9 +45,10 @@ public class SelectStore extends AppCompatActivity {
             spinner_selectStore.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
-                    textView_storeInfo.setText(stores[position].getName());
+                    storeId = stores[position].getId();
+                    //todo
+                    //add more info: Name, address, ...
+                    textView_storeInfo.setText(storeId);
                 }
 
                 @Override
@@ -62,11 +70,12 @@ public class SelectStore extends AppCompatActivity {
         spinner_selectStore.setAdapter(arrayAdapter);
     }
 
-    public void gotoBasket(View view){
-        final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder";
+    public void gotoBasket_click(View view){
         Intent intent = new Intent(this, Basket.class);
-        intent.putExtra(EXTRA_NAME, "NEW");
-
+        // passing the BASKET_TYPE to basket activity
+        intent.putExtra(MainActivity.EXTRA_BASKET_TYPE,
+                getIntent().getStringExtra(MainActivity.EXTRA_BASKET_TYPE));
+        intent.putExtra(EXTRA_STORE_ID, storeId);
         startActivity(intent);
     }
 }

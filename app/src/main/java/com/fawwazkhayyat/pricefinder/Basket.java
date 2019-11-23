@@ -20,7 +20,6 @@ public class Basket extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView textView_result;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

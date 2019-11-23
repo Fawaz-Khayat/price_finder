@@ -36,7 +36,7 @@
                 android:layout_width="256dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="32dp"
-                android:onClick="gotoBasket"
+                android:onClick="gotoBasket_click"
                 android:text="Go To Basket"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
