@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,25 +14,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ProductInfo extends AppCompatActivity {
-    final String barcode = "043100633501";
-    final String storeId = "sirc";
+    static final int RESULT_CODE = 1001;
+    static final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder.NAME";
+    static final String EXTRA_QUANTITY= "com.fawwazkhayyat.pricefinder.QUANTITY";
+    static final String EXTRA_PRICE = "com.fawwazkhayyat.pricefinder.PRICE";
+
 
     TextView textView_name, textView_description, textView_price, textView_quantity;
     ImageView imageView_product;
     //ImageButton imageButton_decrease, imageButton_increase, imageButton_addToBasket;
 
+    String storeId, barcode, barcodeType, name;
     int listId;
     double price, tax, total;
     int quantity;
-
-    //todo
-    //get the date from singleton
-    String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info);
+
+        storeId = getIntent().getStringExtra(SelectStore.EXTRA_STORE_ID);
+        barcode = getIntent().getStringExtra(Basket.EXTRA_BARCODE);
+        barcodeType = getIntent().getStringExtra(Basket.EXTRA_BARCODE_TYPE);
 
         textView_name = findViewById(R.id.textView_name);
         textView_description = findViewById(R.id.textView_description);
@@ -42,10 +47,12 @@ public class ProductInfo extends AppCompatActivity {
 
         FireStoreViewModel fireStoreViewModel = ViewModelProviders.of(this).get(FireStoreViewModel.class);
         fireStoreViewModel.getProduct(storeId, barcode).observe(this, product -> {
-            Log.d("DEBUG_TAG", "ProductInfo onCreate: ");
-            textView_name.setText(product.getName());
+            Log.d("DEBUG_TAG", "ProductInfo: receiving data from fireStoreViewModel");
+            name = product.getName();
+            price = product.getPrice();
+            textView_name.setText(name);
             //textView_description.setText(product.getDescription());
-            textView_price.setText("$"+String.valueOf(product.getPrice()));
+            textView_price.setText("$"+String.valueOf(price));
         });
     }
 
@@ -84,10 +91,17 @@ public class ProductInfo extends AppCompatActivity {
                 insertData);
         db.close();
 
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_NAME,name);
+        intent.putExtra(EXTRA_QUANTITY,quantity);
+        intent.putExtra(EXTRA_PRICE,price);
+        //no need to send data. Basket should refresh data from SQLite Database
+        setResult(RESULT_OK);
+        finish();
         // todo
         // temporary disable add to basket button
         // create intent to for basket activity
-        // enable add to basketn button
-        // start basket activity
+        // enable add to basket button
+        // return results to basket activity
     }
 }
