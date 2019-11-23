@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 public class ProductInfo extends AppCompatActivity {
     static final int RESULT_CODE = 1001;
+    static final String EXTRA_BARCODE = "com.fawwazkhayyat.pricefinder.BARCODE";
     static final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder.NAME";
     static final String EXTRA_QUANTITY= "com.fawwazkhayyat.pricefinder.QUANTITY";
     static final String EXTRA_PRICE = "com.fawwazkhayyat.pricefinder.PRICE";
@@ -83,6 +84,7 @@ public class ProductInfo extends AppCompatActivity {
         insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_DATE_TIME, date);
         insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_STORE_ID, storeId);
         insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_BARCODE, barcode);
+        insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_NAME, name);
         insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_PRICE, price);
         insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_QUANTITY, quantity);
 
@@ -92,16 +94,14 @@ public class ProductInfo extends AppCompatActivity {
         db.close();
 
         Intent intent = new Intent();
+        intent.putExtra(EXTRA_BARCODE,barcode);
         intent.putExtra(EXTRA_NAME,name);
         intent.putExtra(EXTRA_QUANTITY,quantity);
         intent.putExtra(EXTRA_PRICE,price);
-        //no need to send data. Basket should refresh data from SQLite Database
-        setResult(RESULT_OK);
+        setResult(RESULT_OK, intent);
         finish();
-        // todo
+        //todo
         // temporary disable add to basket button
-        // create intent to for basket activity
         // enable add to basket button
-        // return results to basket activity
     }
 }

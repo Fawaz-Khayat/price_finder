@@ -4,6 +4,8 @@ package com.fawwazkhayyat.pricefinder;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -16,18 +18,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("DEBUG_TAG", "DatabaseHelper, onCreate()");
         db.execSQL(SQLiteContract.Stores.SQL_CREATE_TABLE);
         db.execSQL(SQLiteContract.Products.SQL_CREATE_TABLE);
         db.execSQL(SQLiteContract.Lists.SQL_CREATE_TABLE);
         db.execSQL(SQLiteContract.ListItems.SQL_CREATE_TABLE);
+        db.execSQL(SQLiteContract.TemporaryList.SQL_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.d("DEBUG_TAG", "DatabaseHelper, onUpgrade()");
         db.execSQL(SQLiteContract.ListItems.SQL_DELETE_TABLE);
         db.execSQL(SQLiteContract.Lists.SQL_DELETE_TABLE);
         db.execSQL(SQLiteContract.Products.SQL_DELETE_TABLE);
         db.execSQL(SQLiteContract.Stores.SQL_DELETE_TABLE);
+        db.execSQL(SQLiteContract.TemporaryList.SQL_DELETE_TABLE);
 
         onCreate(db);
     }

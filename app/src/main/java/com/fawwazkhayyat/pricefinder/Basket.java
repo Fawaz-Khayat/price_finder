@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,12 +27,15 @@ public class Basket extends AppCompatActivity {
     TextView textView_result;
 
     private String storeId;
-
+    ArrayList<Product> products;
+    BasketRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
 
+        products = new ArrayList<>();
+        adapter = new BasketRecyclerViewAdapter(products);
         MainActivity.BASKET_TYPE basketType;
         if (savedInstanceState == null){
             basketType = (MainActivity.BASKET_TYPE)
@@ -39,11 +43,11 @@ public class Basket extends AppCompatActivity {
             if(basketType != null && basketType.equals(MainActivity.BASKET_TYPE.NEW)){
                 findViewById(R.id.imageButton_save).setEnabled(false);
                 findViewById(R.id.imageButton_scan).setEnabled(true);
+
             }
         }
 
         storeId = getIntent().getStringExtra(SelectStore.EXTRA_STORE_ID);
-
 
         textView_result = findViewById(R.id.textView_result);
 
@@ -52,22 +56,9 @@ public class Basket extends AppCompatActivity {
         db.close();
 
         recyclerView = findViewById(R.id.recyclerView);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // random testing data
-        ArrayList<Product> products = new ArrayList<>();
-        Product product1 = new Product("043100633501");
-        product1.setQuantity(2);
-        product1.setPrice(12);
-        products.add(product1);
-
-        recyclerView.setAdapter(new BasketRecyclerViewAdapter(products));
-
+        recyclerView.setAdapter(adapter);
     }
-
-    // todo
-    // get list_items from the database
 
     public void scan_click(View view){
         IntentIntegrator intentIntegrator = new IntentIntegrator(this);
@@ -98,11 +89,14 @@ public class Basket extends AppCompatActivity {
             //request code for product info
             case REQUEST_CODE:
                 Log.d("DEBUG_TAG", "onActivityResult: product info");
-
+                Product product = new Product(data.getStringExtra(ProductInfo.EXTRA_BARCODE));
+                product.setName(data.getStringExtra(ProductInfo.EXTRA_NAME));
+                product.setPrice(data.getDoubleExtra(ProductInfo.EXTRA_PRICE,0.0));
+                product.setQuantity(data.getIntExtra(ProductInfo.EXTRA_QUANTITY,0));
+                products.add(product);
+                adapter.notifyItemInserted(products.size());
                 break;
         }
-
-
     }
 
     private void openProductInfo(String storeId, String  barcode, String barcodeType){
