@@ -26,16 +26,20 @@ public class Basket extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView textView_result;
 
-    private String storeId;
+    SharedDataSingleton singleton;
     ArrayList<Product> products;
+    private String storeId;
+
     BasketRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
 
-        products = new ArrayList<>();
-        adapter = new BasketRecyclerViewAdapter(products);
+        singleton = SharedDataSingleton.getInstance();
+        singleton.setProductsArrayList();
+        products = singleton.getProductsArrayList();
+
         MainActivity.BASKET_TYPE basketType;
         if (savedInstanceState == null){
             basketType = (MainActivity.BASKET_TYPE)
@@ -50,13 +54,9 @@ public class Basket extends AppCompatActivity {
         storeId = getIntent().getStringExtra(SelectStore.EXTRA_STORE_ID);
 
         textView_result = findViewById(R.id.textView_result);
-
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.close();
-
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new BasketRecyclerViewAdapter(products);
         recyclerView.setAdapter(adapter);
     }
 
@@ -79,7 +79,7 @@ public class Basket extends AppCompatActivity {
                         String barcode = result.getContents();
                         String barcodeType = result.getFormatName();
                         Toast.makeText(this, "Scanned: " + barcode, Toast.LENGTH_LONG).show();
-                        openProductInfo(storeId, barcode, barcodeType);
+                        getProductInfo(storeId, barcode, barcodeType);
                         textView_result.setText(barcode);
                     }
                 } else {
@@ -99,7 +99,7 @@ public class Basket extends AppCompatActivity {
         }
     }
 
-    private void openProductInfo(String storeId, String  barcode, String barcodeType){
+    private void getProductInfo(String storeId, String  barcode, String barcodeType){
         barcode = "043100633501";
         Intent intent = new Intent(this, ProductInfo.class);
         intent.putExtra(SelectStore.EXTRA_STORE_ID,storeId);

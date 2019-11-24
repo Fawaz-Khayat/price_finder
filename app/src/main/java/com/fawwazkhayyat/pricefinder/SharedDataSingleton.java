@@ -1,6 +1,7 @@
 package com.fawwazkhayyat.pricefinder;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -24,6 +25,8 @@ class SharedDataSingleton {
     final String DATE_TIME_OUTPUT_FORMAT = "EE dd MMM yyyy, HH:mm, z";
 
     private String newDate = "";
+    private ArrayList<Product> productsArrayList;
+
 
 
     public void setNewDate(){
@@ -37,5 +40,13 @@ class SharedDataSingleton {
 
     public String getNewDate(){
         return newDate;
+    }
+
+    public void setProductsArrayList(){
+        productsArrayList = new ArrayList<>();
+    }
+
+    public ArrayList<Product> getProductsArrayList(){
+        return productsArrayList;
     }
 }
