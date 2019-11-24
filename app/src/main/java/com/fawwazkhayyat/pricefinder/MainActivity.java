@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     enum BASKET_TYPE {
         NEW,
         SAVED
-    };
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -5,8 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,12 +19,14 @@ import java.util.ArrayList;
 public class Basket extends AppCompatActivity {
     static final String EXTRA_BARCODE = "com.fawwazkhayyat.pricefinder.BARCODE";
     static final String EXTRA_BARCODE_TYPE = "com.fawwazkhayyat.pricefinder.BARCODE_TYPE";
-    static final int REQUEST_CODE = 1000;
+    static final int REQUEST_CODE_ADD = 1000;
+    static final int REQUEST_CODE_EDIT = 1100;
+
 
     RecyclerView recyclerView;
     TextView textView_result;
 
-    final SharedDataSingleton singleton = SharedDataSingleton.getInstance();
+    //final SharedDataSingleton singleton = SharedDataSingleton.getInstance();
     ArrayList<Product> products;
     private String storeId;
 
@@ -36,8 +36,7 @@ public class Basket extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
 
-        singleton.setProductsArrayList();
-        products = singleton.getProductsArrayList();
+        products = new ArrayList<>();
 
         MainActivity.BASKET_TYPE basketType;
         if (savedInstanceState == null){
@@ -78,7 +77,18 @@ public class Basket extends AppCompatActivity {
                         String barcode = result.getContents();
                         String barcodeType = result.getFormatName();
                         Toast.makeText(this, "Scanned: " + barcode, Toast.LENGTH_LONG).show();
-                        getProductInfo(storeId, barcode, barcodeType);
+                        //todo
+                        // check if the product already in the basket
+                        // if already in the basket, edit
+                        // else, add
+                        int productIndex = getProductPosition(barcode);
+                        if(productIndex<0)
+                            getProductInfo(storeId, barcode, barcodeType);
+                        else
+
+                            //todo
+                        // edit the product info
+
                         textView_result.setText(barcode);
                     }
                 } else {
@@ -86,24 +96,51 @@ public class Basket extends AppCompatActivity {
                 }
                 break;
             //request code for product info
-            case REQUEST_CODE:
+            case REQUEST_CODE_ADD:
                 Log.d("DEBUG_TAG", "onActivityResult: product info");
-                Product product = new Product(data.getStringExtra(ProductInfo.EXTRA_BARCODE));
-                product.setName(data.getStringExtra(ProductInfo.EXTRA_NAME));
-                product.setPrice(data.getDoubleExtra(ProductInfo.EXTRA_PRICE,0.0));
-                product.setQuantity(data.getIntExtra(ProductInfo.EXTRA_QUANTITY,0));
+
+                Product product = new Product(data.getStringExtra(ProductGetter.EXTRA_BARCODE));
+                product.setName(data.getStringExtra(ProductGetter.EXTRA_NAME));
+                product.setPrice(data.getDoubleExtra(ProductGetter.EXTRA_PRICE,0.0));
+                product.setQuantity(data.getIntExtra(ProductGetter.EXTRA_QUANTITY,0));
                 products.add(product);
                 adapter.notifyItemInserted(products.size());
+                break;
+            case REQUEST_CODE_EDIT:
+                //todo
+                // implement editing the product
+                //adapter.notifyDataSetChanged ();
                 break;
         }
     }
 
+    /**
+     * Check if the product exists in the product list,
+     * @param barcode
+     * @return if exists, return the position of the product in the ArrayList
+     *      * else, return -1
+     */
+    private int getProductPosition(String barcode){
+        for(int i=0;i<products.size();i++){
+            if(products.get(i).getBarcode().equals(barcode)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     private void getProductInfo(String storeId, String  barcode, String barcodeType){
         barcode = "043100633501";
-        Intent intent = new Intent(this, ProductInfo.class);
+        Intent intent = new Intent(this, ProductGetter.class);
         intent.putExtra(SelectStore.EXTRA_STORE_ID,storeId);
         intent.putExtra(EXTRA_BARCODE,barcode);
         intent.putExtra(EXTRA_BARCODE_TYPE,barcodeType);
-        startActivityForResult(intent, REQUEST_CODE);
+        startActivityForResult(intent, REQUEST_CODE_ADD);
+    }
+    private void editProduct(Product product){
+        Intent intent = new Intent(this, ProductGetter.class);
+
+        //todo
+        // implement edit product quantity
     }
 }
