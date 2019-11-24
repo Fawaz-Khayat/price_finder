@@ -24,7 +24,6 @@ public class SelectStore extends AppCompatActivity {
 
     private String storeId;
 
-
     Spinner spinner_selectStore;
     TextView textView_storeInfo;
 

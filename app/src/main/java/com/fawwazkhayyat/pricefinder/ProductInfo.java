@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ProductInfo extends AppCompatActivity {
     static final int RESULT_CODE = 1001;
     static final String EXTRA_BARCODE = "com.fawwazkhayyat.pricefinder.BARCODE";
@@ -20,7 +22,7 @@ public class ProductInfo extends AppCompatActivity {
     static final String EXTRA_QUANTITY= "com.fawwazkhayyat.pricefinder.QUANTITY";
     static final String EXTRA_PRICE = "com.fawwazkhayyat.pricefinder.PRICE";
 
-
+    final SharedDataSingleton singleton = SharedDataSingleton.getInstance();
     TextView textView_name, textView_description, textView_price, textView_quantity;
     ImageView imageView_product;
     //ImageButton imageButton_decrease, imageButton_increase, imageButton_addToBasket;
@@ -44,24 +46,31 @@ public class ProductInfo extends AppCompatActivity {
         textView_price = findViewById(R.id.textView_price);
         textView_quantity = findViewById(R.id.textView_quantity);
 
-        quantity = 0;
-
         FireStoreViewModel fireStoreViewModel = ViewModelProviders.of(this).get(FireStoreViewModel.class);
         fireStoreViewModel.getProduct(storeId, barcode).observe(this, product -> {
             Log.d("DEBUG_TAG", "ProductInfo: receiving data from fireStoreViewModel");
             name = product.getName();
             price = product.getPrice();
+            quantity = getAdjustedQuantity();
             textView_name.setText(name);
             //textView_description.setText(product.getDescription());
             textView_price.setText("$"+String.valueOf(price));
+            textView_quantity.setText(String.valueOf(quantity));
         });
     }
 
-    //todo
-    // check if product exists in the basket
+    private int getAdjustedQuantity(){
+        ArrayList<Product> products = singleton.getProductsArrayList();
+        for(int i=0;i<products.size();i++){
+            if(products.get(i).getBarcode().equals(barcode)){
+                return products.get(i).getQuantity();
+            }
+        }
+        return 1;
+    }
 
     public void decrease_click(View view){
-        if(quantity>0)
+        if(quantity>1)
             quantity--;
         textView_quantity.setText(String.valueOf(quantity));
         total = quantity * price;
@@ -72,7 +81,6 @@ public class ProductInfo extends AppCompatActivity {
         total = quantity * price;
     }
     public void addToBasket_click(View view){
-        SharedDataSingleton singleton = SharedDataSingleton.getInstance();
         String date = singleton.getNewDate();
 
         Intent intent = new Intent();

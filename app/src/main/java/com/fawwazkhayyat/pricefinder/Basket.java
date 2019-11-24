@@ -26,7 +26,7 @@ public class Basket extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView textView_result;
 
-    SharedDataSingleton singleton;
+    final SharedDataSingleton singleton = SharedDataSingleton.getInstance();
     ArrayList<Product> products;
     private String storeId;
 
@@ -36,7 +36,6 @@ public class Basket extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
 
-        singleton = SharedDataSingleton.getInstance();
         singleton.setProductsArrayList();
         products = singleton.getProductsArrayList();
 
