@@ -95,37 +95,4 @@ class SQLiteContract {
         static final String SQL_DELETE_TABLE =
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
-
-    static class TemporaryList{
-        static final String TABLE_NAME = "temporary_list";
-        static final String COLUMN_NAME_DATE_TIME = "date";
-        static final String COLUMN_NAME_STORE_ID = "store_id";
-        static final String COLUMN_NAME_BARCODE = "barcode";
-        static final String COLUMN_NAME_NAME = "name";
-        static final String COLUMN_NAME_PRICE = "price";
-        static final String COLUMN_NAME_QUANTITY = "quantity";
-
-        static final String SQL_CREATE_TABLE =
-                "CREATE TABLE " + TABLE_NAME + " (" +
-                        COLUMN_NAME_DATE_TIME + " TEXT NOT NULL, " +
-                        COLUMN_NAME_STORE_ID + " TEXT NOT NULL, " +
-                        COLUMN_NAME_BARCODE + " TEXT NOT NULL, " +
-                        COLUMN_NAME_NAME + " TEXT NOT NULL, " +
-                        COLUMN_NAME_PRICE + " REAL NOT NULL, " +
-                        COLUMN_NAME_QUANTITY + " INTEGER NOT NULL, " +
-
-                        //FOREIGN KEY(store_id) REFERENCES stores(_id)
-                        "FOREIGN KEY(" + COLUMN_NAME_STORE_ID + ") REFERENCES " +
-                        Stores.TABLE_NAME + "(" + Stores.COLUMN_NAME_STORE_ID + "), " +
-                        //FOREIGN KEY(barcode) REFERENCES products(_barcode)
-                        "FOREIGN KEY(" + COLUMN_NAME_BARCODE + ") REFERENCES " +
-                        Products.TABLE_NAME + "(" + Products.COLUMN_NAME_BARCODE + "), " +
-
-                        "PRIMARY KEY (" + COLUMN_NAME_STORE_ID + "," + COLUMN_NAME_BARCODE + ")" +
-                        ");";
-
-        static final String SQL_DELETE_TABLE =
-                "DROP TABLE IF EXISTS " + TABLE_NAME;
-    }
-
 }

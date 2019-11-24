@@ -57,6 +57,9 @@ public class ProductInfo extends AppCompatActivity {
         });
     }
 
+    //todo
+    // check if product exists in the basket
+
     public void decrease_click(View view){
         if(quantity>0)
             quantity--;
@@ -71,27 +74,6 @@ public class ProductInfo extends AppCompatActivity {
     public void addToBasket_click(View view){
         SharedDataSingleton singleton = SharedDataSingleton.getInstance();
         String date = singleton.getNewDate();
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        /*
-        INSERT INTO TABLE_NAME (column1, column2, column3,...columnN)
-        VALUES (value1, value2, value3,...valueN);
-         */
-
-        // save to temporary list
-        ContentValues insertData = new ContentValues(6);
-        insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_DATE_TIME, date);
-        insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_STORE_ID, storeId);
-        insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_BARCODE, barcode);
-        insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_NAME, name);
-        insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_PRICE, price);
-        insertData.put(SQLiteContract.TemporaryList.COLUMN_NAME_QUANTITY, quantity);
-
-        db.insert(SQLiteContract.TemporaryList.TABLE_NAME ,
-                null,
-                insertData);
-        db.close();
 
         Intent intent = new Intent();
         intent.putExtra(EXTRA_BARCODE,barcode);
