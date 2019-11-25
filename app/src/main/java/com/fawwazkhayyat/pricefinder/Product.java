@@ -1,10 +1,15 @@
 package com.fawwazkhayyat.pricefinder;
 
+import android.util.Log;
+
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 public class Product {
     private String barcode;
     private String name;
     private double price;
-    private String picture;
+    private StorageReference imageRef;
     private String description;
     private int quantity;
 
@@ -32,12 +37,18 @@ public class Product {
         this.price = price;
     }
 
-    public String getPicture() {
-        return picture;
+    public StorageReference getImageRef() {
+        return imageRef;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setImageRef(StorageReference imageRef) {
+        this.imageRef = imageRef;
+    }
+    public void setImageRef(String imagePath) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        this.imageRef = storageReference.child(imagePath);
+        Log.d("DEBUG_TAG", "setImageRef: " + this.imageRef);
     }
 
     public String getDescription() {

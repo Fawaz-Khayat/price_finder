@@ -99,10 +99,10 @@ public class Basket extends AppCompatActivity {
             case REQUEST_CODE_ADD:
                 Log.d("DEBUG_TAG", "onActivityResult: product info");
 
-                Product product = new Product(data.getStringExtra(ProductGetter.EXTRA_BARCODE));
-                product.setName(data.getStringExtra(ProductGetter.EXTRA_NAME));
-                product.setPrice(data.getDoubleExtra(ProductGetter.EXTRA_PRICE,0.0));
-                product.setQuantity(data.getIntExtra(ProductGetter.EXTRA_QUANTITY,0));
+                Product product = new Product(data.getStringExtra(ProductInfo.EXTRA_BARCODE));
+                product.setName(data.getStringExtra(ProductInfo.EXTRA_NAME));
+                product.setPrice(data.getDoubleExtra(ProductInfo.EXTRA_PRICE,0.0));
+                product.setQuantity(data.getIntExtra(ProductInfo.EXTRA_QUANTITY,0));
                 products.add(product);
                 adapter.notifyItemInserted(products.size());
                 break;
@@ -131,14 +131,14 @@ public class Basket extends AppCompatActivity {
 
     private void getProductInfo(String storeId, String  barcode, String barcodeType){
         barcode = "043100633501";
-        Intent intent = new Intent(this, ProductGetter.class);
+        Intent intent = new Intent(this, ProductInfo.class);
         intent.putExtra(SelectStore.EXTRA_STORE_ID,storeId);
         intent.putExtra(EXTRA_BARCODE,barcode);
         intent.putExtra(EXTRA_BARCODE_TYPE,barcodeType);
         startActivityForResult(intent, REQUEST_CODE_ADD);
     }
     private void editProduct(Product product){
-        Intent intent = new Intent(this, ProductGetter.class);
+        Intent intent = new Intent(this, ProductInfo.class);
 
         //todo
         // implement edit product quantity

@@ -13,10 +13,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 //todo
 // rewrite the class to only get information of newly added prodects
-public class ProductGetter extends AppCompatActivity {
+public class ProductInfo extends AppCompatActivity {
     static final int RESULT_CODE = 1001;
     static final String EXTRA_BARCODE = "com.fawwazkhayyat.pricefinder.BARCODE";
     static final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder.NAME";
@@ -29,7 +32,7 @@ public class ProductGetter extends AppCompatActivity {
     String storeId, barcode, barcodeType, name;
     double price, tax, total;
     int quantity;
-
+    StorageReference imagesRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +46,16 @@ public class ProductGetter extends AppCompatActivity {
         textView_description = findViewById(R.id.textView_description);
         textView_price = findViewById(R.id.textView_price);
         textView_quantity = findViewById(R.id.textView_quantity);
+        imageView_product = findViewById(R.id.imageView_product);
 
         //get the product info from firestore
         FireStoreViewModel fireStoreViewModel = ViewModelProviders.of(this).get(FireStoreViewModel.class);
         fireStoreViewModel.getProduct(storeId, barcode).observe(this, product -> {
             Log.d("DEBUG_TAG", "ProductInfo: receiving data from fireStoreViewModel");
+            GlideApp.with(this)
+                    .load(product.getImageRef())
+                    .into(imageView_product);
+
             name = product.getName();
             price = product.getPrice();
             quantity = 1;
@@ -56,6 +64,8 @@ public class ProductGetter extends AppCompatActivity {
             //textView_description.setText(product.getDescription());
             textView_price.setText("$"+String.valueOf(price));
             textView_quantity.setText(String.valueOf(quantity));
+
+
         });
     }
 

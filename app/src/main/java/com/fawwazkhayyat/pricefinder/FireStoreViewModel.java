@@ -8,12 +8,16 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -23,6 +27,7 @@ public class FireStoreViewModel extends ViewModel {
     private String PATH_COLLECTION_STORES = "stores";
     private MutableLiveData<Store[]> stores;
     private MutableLiveData<Product> product;
+    private MutableLiveData<String> productImageRefPath;
 
     public FireStoreViewModel() {
         this.db = FirebaseFirestore.getInstance();
@@ -40,6 +45,7 @@ public class FireStoreViewModel extends ViewModel {
 
         if(product == null){
             product = new MutableLiveData<>();
+            Product tempProduct = new Product(barcode);;
             loadProduct(storeId, barcode);
         }
         return product;
@@ -110,13 +116,47 @@ public class FireStoreViewModel extends ViewModel {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         Product tempProduct = new Product(barcode);
                         DocumentSnapshot docResult = task.getResult();
-                        if(docResult.contains("name"))
-                            tempProduct.setName((String) docResult.get("name"));
-                        if(docResult.contains("price"))
-                            tempProduct.setPrice((double)docResult.getDouble("price"));
-
+                        if(docResult!=null){
+                            if(docResult.contains("name"))
+                                tempProduct.setName((String) docResult.get("name"));
+                            if(docResult.contains("price"))
+                                tempProduct.setPrice((double)docResult.getDouble("price"));
+                        }
                         Log.d("DEBUG_TAG", "loadProduct onComplete:");
-                        product.postValue(tempProduct);
+
+                        // another data call to get the image reference
+                        ////////////////////////
+                        db.document("/products/"+barcode)
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        Log.d("DEBUG_TAG", "onSuccess: loadProductImageRef");
+                                        if(documentSnapshot!=null) {
+                                            if (documentSnapshot.contains("imageRefPath")) {
+
+                                                tempProduct.setImageRef(documentSnapshot.getString("imageRefPath"));
+                                                //todo
+                                                // remove below commented line
+                                                //tempProduct.setImageRef("images/pexels_photo_2535207.jpeg");
+                                            }
+                                        }
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("DEBUG_TAG", "onFailure: " + e);
+                                    }
+                                })
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        Log.d("DEBUG_TAG", "onComplete: loadProductImageRef");
+                                        product.setValue(tempProduct);
+                                    }
+                                });
+                        /////////////////////
                     }
                 });
     }
