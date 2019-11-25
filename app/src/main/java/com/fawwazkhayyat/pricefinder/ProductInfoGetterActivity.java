@@ -24,23 +24,8 @@ public class ProductInfoGetterActivity extends ProductInfoActivity {
         FireStoreViewModel fireStoreViewModel = ViewModelProviders.of(this).get(FireStoreViewModel.class);
         fireStoreViewModel.getProduct(storeId, barcode).observe(this, product -> {
             Log.d("DEBUG_TAG", "ProductInfoActivity: receiving data from fireStoreViewModel");
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageReference = storage.getReference();
-            StorageReference imageRef = storageReference.child(product.getImageRefPath());
-            GlideApp.with(this)
-                    .load(imageRef)
-                    .into(imageView_product);
-
-            name = product.getName();
-            price = product.getPrice();
-            quantity = 1;
-
-            textView_name.setText(name);
-            //textView_description.setText(product.getDescription());
-            textView_price.setText("$"+String.valueOf(price));
-            textView_quantity.setText(String.valueOf(quantity));
+            populateProductInfo(product);
         });
-
     }
 
     public void addToBasket_click(View view){

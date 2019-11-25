@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 //todo
@@ -52,7 +53,23 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
         total = quantity * price;
     }
 
+    protected void populateProductInfo(Product product){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference imageRef = storageReference.child(product.getImageRefPath());
+        GlideApp.with(this)
+                .load(imageRef)
+                .into(imageView_product);
 
+        name = product.getName();
+        price = product.getPrice();
+        quantity = 1;
+
+        textView_name.setText(name);
+        //textView_description.setText(product.getDescription());
+        textView_price.setText("$"+String.valueOf(price));
+        textView_quantity.setText(String.valueOf(quantity));
+    }
     //todo
     // temporary disable add to basket button
     // enable add to basket button
