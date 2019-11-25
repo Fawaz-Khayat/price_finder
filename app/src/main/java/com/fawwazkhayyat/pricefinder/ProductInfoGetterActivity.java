@@ -36,6 +36,7 @@ public class ProductInfoGetterActivity extends ProductInfoActivity {
         intent.putExtra(EXTRA_NAME,name);
         intent.putExtra(EXTRA_QUANTITY,quantity);
         intent.putExtra(EXTRA_PRICE,price);
+        intent.putExtra(EXTRA_IMAGE_PATH,imagePath);
         setResult(RESULT_OK, intent);
         finish();
     }

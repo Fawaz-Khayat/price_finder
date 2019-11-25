@@ -21,6 +21,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
     static final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder.NAME";
     static final String EXTRA_QUANTITY= "com.fawwazkhayyat.pricefinder.QUANTITY";
     static final String EXTRA_PRICE = "com.fawwazkhayyat.pricefinder.PRICE";
+    static final String EXTRA_IMAGE_PATH = "com.fawwazkhayyat.pricefinder.IMAGE_PATH";
 
     protected TextView textView_name, textView_description, textView_price, textView_quantity;
     protected ImageView imageView_product;
@@ -28,6 +29,8 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
     protected String storeId, barcode, barcodeType, name, description, imagePath;
     protected double price, tax, total;
     protected int quantity;
+
+    abstract public void addToBasket_click(View view);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
     }
 
     protected void getDataFromProduct(Product product){
+        barcode = product.getBarcode();
         name = product.getName();
         description = product.getDescription();
         price = product.getPrice();

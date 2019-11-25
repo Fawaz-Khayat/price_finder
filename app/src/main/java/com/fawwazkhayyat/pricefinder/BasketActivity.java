@@ -17,6 +17,7 @@ import com.google.zxing.integration.android.IntentResult;
 import java.util.ArrayList;
 
 public class BasketActivity extends AppCompatActivity {
+    static final String EXTRA_POSITION = "com.fawwazkhayyat.pricefinder.POSITION";
     static final String EXTRA_BARCODE = "com.fawwazkhayyat.pricefinder.BARCODE";
     static final String EXTRA_BARCODE_TYPE = "com.fawwazkhayyat.pricefinder.BARCODE_TYPE";
     static final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder.NAME";
@@ -80,9 +81,11 @@ public class BasketActivity extends AppCompatActivity {
                         Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
                     } else {
                         String barcode = result.getContents();
+                        //todo
+                        // remove manual assignment to barcode
+                        barcode = "043100633501";
                         String barcodeType = result.getFormatName();
                         Toast.makeText(this, "Scanned: " + barcode, Toast.LENGTH_LONG).show();
-                        //todo
                         // check if the product already in the basket
                         // if already in the basket, edit
                         // else, add
@@ -91,10 +94,8 @@ public class BasketActivity extends AppCompatActivity {
                             getProductInfo(storeId, barcode, barcodeType);
                         else
                             editProduct(productIndex);
-
-                            //todo
-                        // edit the product info
-
+                        //todo
+                        // remove textView_result from layout
                         textView_result.setText(barcode);
                     }
                 } else {
@@ -109,14 +110,17 @@ public class BasketActivity extends AppCompatActivity {
                 product.setName(data.getStringExtra(ProductInfoActivity.EXTRA_NAME));
                 product.setPrice(data.getDoubleExtra(ProductInfoActivity.EXTRA_PRICE,0.0));
                 product.setQuantity(data.getIntExtra(ProductInfoActivity.EXTRA_QUANTITY,0));
+                product.setImageRefPath(data.getStringExtra(ProductInfoActivity.EXTRA_IMAGE_PATH));
                 products.add(product);
                 adapter.notifyItemInserted(products.size());
                 break;
             case REQUEST_CODE_EDIT:
-
+                int position = data.getIntExtra(ProductInfoEditorActivity.EXTRA_POSITION,-1);
+                int quantity = data.getIntExtra(ProductInfoEditorActivity.EXTRA_QUANTITY, -1);
                 //todo
-                // implement editing the product
-                //adapter.notifyDataSetChanged ();
+                // check if either position or quantity < 0
+                products.get(position).setQuantity(quantity);
+                adapter.notifyItemChanged (position);
                 break;
         }
     }
@@ -137,9 +141,6 @@ public class BasketActivity extends AppCompatActivity {
     }
 
     private void getProductInfo(String storeId, String  barcode, String barcodeType){
-        //todo
-        // remove manual assignment to barcode
-        barcode = "043100633501";
         Intent intent = new Intent(this, ProductInfoGetterActivity.class);
         intent.putExtra(SelectStoreActivity.EXTRA_STORE_ID,storeId);
         intent.putExtra(EXTRA_BARCODE,barcode);
@@ -160,6 +161,7 @@ public class BasketActivity extends AppCompatActivity {
         int quantity = products.get(position).getQuantity();
         String imageRefPath = products.get(position).getImageRefPath();
 
+        intent.putExtra(EXTRA_POSITION,position);
         intent.putExtra(EXTRA_NAME, name);
         intent.putExtra(EXTRA_DESCRIPTION, description);
         intent.putExtra(EXTRA_PRICE, price);
@@ -167,7 +169,5 @@ public class BasketActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_IMAGE_PATH, imageRefPath);
 
         startActivityForResult(intent, REQUEST_CODE_EDIT);
-        //todo
-        // implement edit product quantity
     }
 }
