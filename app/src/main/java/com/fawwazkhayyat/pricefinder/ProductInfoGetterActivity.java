@@ -24,7 +24,9 @@ public class ProductInfoGetterActivity extends ProductInfoActivity {
         FireStoreViewModel fireStoreViewModel = ViewModelProviders.of(this).get(FireStoreViewModel.class);
         fireStoreViewModel.getProduct(storeId, barcode).observe(this, product -> {
             Log.d("DEBUG_TAG", "ProductInfoActivity: receiving data from fireStoreViewModel");
-            populateProductInfo(product);
+            quantity = 1;
+            getDataFromProduct(product);
+            populateProductInfo();
         });
     }
 

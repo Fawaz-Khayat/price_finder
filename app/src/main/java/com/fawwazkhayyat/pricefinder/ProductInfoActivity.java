@@ -25,7 +25,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
     protected TextView textView_name, textView_description, textView_price, textView_quantity;
     protected ImageView imageView_product;
 
-    protected String storeId, barcode, barcodeType, name, description;
+    protected String storeId, barcode, barcodeType, name, description, imagePath;
     protected double price, tax, total;
     protected int quantity;
 
@@ -53,23 +53,26 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
         total = quantity * price;
     }
 
-    protected void populateProductInfo(Product product){
+    protected void getDataFromProduct(Product product){
+        name = product.getName();
+        description = product.getDescription();
+        price = product.getPrice();
+        imagePath = product.getImageRefPath();
+    }
+    protected void populateProductInfo(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
-        StorageReference imageRef = storageReference.child(product.getImageRefPath());
+        StorageReference imageRef = storageReference.child(imagePath);
         GlideApp.with(this)
                 .load(imageRef)
                 .into(imageView_product);
 
-        name = product.getName();
-        price = product.getPrice();
-        quantity = 1;
-
         textView_name.setText(name);
-        //textView_description.setText(product.getDescription());
+        textView_description.setText(description);
         textView_price.setText("$"+String.valueOf(price));
         textView_quantity.setText(String.valueOf(quantity));
     }
+
     //todo
     // temporary disable add to basket button
     // enable add to basket button
