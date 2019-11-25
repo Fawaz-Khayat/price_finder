@@ -1,10 +1,8 @@
 package com.fawwazkhayyat.pricefinder;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +15,7 @@ import android.widget.TextView;
 import java.util.Arrays;
 
 
-public class SelectStore extends AppCompatActivity {
+public class SelectStoreActivity extends AppCompatActivity {
     //final String EXTRA_BASKET_TYPE = "com.fawwazkhayyat.pricefinder.BASKET_TYPE";
     static final String EXTRA_STORE_ID = "com.fawwazkhayyat.pricefinder.STORE_ID";
     final String TAG = "DEBUG_TAG";
@@ -70,7 +68,7 @@ public class SelectStore extends AppCompatActivity {
     }
 
     public void gotoBasket_click(View view){
-        Intent intent = new Intent(this, Basket.class);
+        Intent intent = new Intent(this, BasketActivity.class);
         // passing the BASKET_TYPE to basket activity
         intent.putExtra(MainActivity.EXTRA_BASKET_TYPE,
                 getIntent().getStringExtra(MainActivity.EXTRA_BASKET_TYPE));

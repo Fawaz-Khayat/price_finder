@@ -16,7 +16,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 
-public class Basket extends AppCompatActivity {
+public class BasketActivity extends AppCompatActivity {
     static final String EXTRA_BARCODE = "com.fawwazkhayyat.pricefinder.BARCODE";
     static final String EXTRA_BARCODE_TYPE = "com.fawwazkhayyat.pricefinder.BARCODE_TYPE";
     static final int REQUEST_CODE_ADD = 1000;
@@ -49,7 +49,7 @@ public class Basket extends AppCompatActivity {
             }
         }
 
-        storeId = getIntent().getStringExtra(SelectStore.EXTRA_STORE_ID);
+        storeId = getIntent().getStringExtra(SelectStoreActivity.EXTRA_STORE_ID);
 
         textView_result = findViewById(R.id.textView_result);
         recyclerView = findViewById(R.id.recyclerView);
@@ -99,10 +99,10 @@ public class Basket extends AppCompatActivity {
             case REQUEST_CODE_ADD:
                 Log.d("DEBUG_TAG", "onActivityResult: product info");
 
-                Product product = new Product(data.getStringExtra(ProductInfo.EXTRA_BARCODE));
-                product.setName(data.getStringExtra(ProductInfo.EXTRA_NAME));
-                product.setPrice(data.getDoubleExtra(ProductInfo.EXTRA_PRICE,0.0));
-                product.setQuantity(data.getIntExtra(ProductInfo.EXTRA_QUANTITY,0));
+                Product product = new Product(data.getStringExtra(ProductInfoActivity.EXTRA_BARCODE));
+                product.setName(data.getStringExtra(ProductInfoActivity.EXTRA_NAME));
+                product.setPrice(data.getDoubleExtra(ProductInfoActivity.EXTRA_PRICE,0.0));
+                product.setQuantity(data.getIntExtra(ProductInfoActivity.EXTRA_QUANTITY,0));
                 products.add(product);
                 adapter.notifyItemInserted(products.size());
                 break;
@@ -131,14 +131,14 @@ public class Basket extends AppCompatActivity {
 
     private void getProductInfo(String storeId, String  barcode, String barcodeType){
         barcode = "043100633501";
-        Intent intent = new Intent(this, ProductInfo.class);
-        intent.putExtra(SelectStore.EXTRA_STORE_ID,storeId);
+        Intent intent = new Intent(this, ProductInfoActivity.class);
+        intent.putExtra(SelectStoreActivity.EXTRA_STORE_ID,storeId);
         intent.putExtra(EXTRA_BARCODE,barcode);
         intent.putExtra(EXTRA_BARCODE_TYPE,barcodeType);
         startActivityForResult(intent, REQUEST_CODE_ADD);
     }
     private void editProduct(Product product){
-        Intent intent = new Intent(this, ProductInfo.class);
+        Intent intent = new Intent(this, ProductInfoActivity.class);
 
         //todo
         // implement edit product quantity

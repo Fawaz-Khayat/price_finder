@@ -3,23 +3,18 @@ package com.fawwazkhayyat.pricefinder;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
 //todo
 // rewrite the class to only get information of newly added prodects
-public class ProductInfo extends AppCompatActivity {
+public class ProductInfoActivity extends AppCompatActivity {
     static final int RESULT_CODE = 1001;
     static final String EXTRA_BARCODE = "com.fawwazkhayyat.pricefinder.BARCODE";
     static final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder.NAME";
@@ -38,9 +33,9 @@ public class ProductInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info);
 
-        storeId = getIntent().getStringExtra(SelectStore.EXTRA_STORE_ID);
-        barcode = getIntent().getStringExtra(Basket.EXTRA_BARCODE);
-        barcodeType = getIntent().getStringExtra(Basket.EXTRA_BARCODE_TYPE);
+        storeId = getIntent().getStringExtra(SelectStoreActivity.EXTRA_STORE_ID);
+        barcode = getIntent().getStringExtra(BasketActivity.EXTRA_BARCODE);
+        barcodeType = getIntent().getStringExtra(BasketActivity.EXTRA_BARCODE_TYPE);
 
         textView_name = findViewById(R.id.textView_name);
         textView_description = findViewById(R.id.textView_description);
@@ -51,7 +46,7 @@ public class ProductInfo extends AppCompatActivity {
         //get the product info from firestore
         FireStoreViewModel fireStoreViewModel = ViewModelProviders.of(this).get(FireStoreViewModel.class);
         fireStoreViewModel.getProduct(storeId, barcode).observe(this, product -> {
-            Log.d("DEBUG_TAG", "ProductInfo: receiving data from fireStoreViewModel");
+            Log.d("DEBUG_TAG", "ProductInfoActivity: receiving data from fireStoreViewModel");
             GlideApp.with(this)
                     .load(product.getImageRef())
                     .into(imageView_product);
