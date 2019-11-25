@@ -135,7 +135,7 @@ public class FireStoreViewModel extends ViewModel {
                                         if(documentSnapshot!=null) {
                                             if (documentSnapshot.contains("imageRefPath")) {
 
-                                                tempProduct.setImageRef(documentSnapshot.getString("imageRefPath"));
+                                                tempProduct.setImageRefPath(documentSnapshot.getString("imageRefPath"));
                                                 //todo
                                                 // remove below commented line
                                                 //tempProduct.setImageRef("images/pexels_photo_2535207.jpeg");

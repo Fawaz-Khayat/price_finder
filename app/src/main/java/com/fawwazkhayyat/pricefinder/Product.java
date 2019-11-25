@@ -9,7 +9,7 @@ public class Product {
     private String barcode;
     private String name;
     private double price;
-    private StorageReference imageRef;
+    private String imageRefPath;
     private String description;
     private int quantity;
 
@@ -37,20 +37,6 @@ public class Product {
         this.price = price;
     }
 
-    public StorageReference getImageRef() {
-        return imageRef;
-    }
-
-    public void setImageRef(StorageReference imageRef) {
-        this.imageRef = imageRef;
-    }
-    public void setImageRef(String imagePath) {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference();
-        this.imageRef = storageReference.child(imagePath);
-        Log.d("DEBUG_TAG", "setImageRef: " + this.imageRef);
-    }
-
     public String getDescription() {
         return description;
     }
@@ -65,5 +51,13 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImageRefPath() {
+        return imageRefPath;
+    }
+
+    public void setImageRefPath(String imageRefPath) {
+        this.imageRefPath = imageRefPath;
     }
 }

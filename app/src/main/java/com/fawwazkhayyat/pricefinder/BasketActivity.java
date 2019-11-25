@@ -19,18 +19,23 @@ import java.util.ArrayList;
 public class BasketActivity extends AppCompatActivity {
     static final String EXTRA_BARCODE = "com.fawwazkhayyat.pricefinder.BARCODE";
     static final String EXTRA_BARCODE_TYPE = "com.fawwazkhayyat.pricefinder.BARCODE_TYPE";
+    static final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder.NAME";
+    static final String EXTRA_DESCRIPTION = "com.fawwazkhayyat.pricefinder.DESCRIPTION";
+    static final String EXTRA_PRICE = "com.fawwazkhayyat.pricefinder.PRICE";
+    static final String EXTRA_QUANTITY = "com.fawwazkhayyat.pricefinder.QUANTITY";
+    static final String EXTRA_IMAGE_PATH = "com.fawwazkhayyat.pricefinder.IMAGE_PATH";
     static final int REQUEST_CODE_ADD = 1000;
     static final int REQUEST_CODE_EDIT = 1100;
 
 
-    RecyclerView recyclerView;
-    TextView textView_result;
+    private RecyclerView recyclerView;
+    private TextView textView_result;
 
     //final SharedDataSingleton singleton = SharedDataSingleton.getInstance();
-    ArrayList<Product> products;
+    private ArrayList<Product> products;
     private String storeId;
 
-    BasketRecyclerViewAdapter adapter;
+    private BasketRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +90,7 @@ public class BasketActivity extends AppCompatActivity {
                         if(productIndex<0)
                             getProductInfo(storeId, barcode, barcodeType);
                         else
+                            editProduct(productIndex);
 
                             //todo
                         // edit the product info
@@ -107,6 +113,7 @@ public class BasketActivity extends AppCompatActivity {
                 adapter.notifyItemInserted(products.size());
                 break;
             case REQUEST_CODE_EDIT:
+
                 //todo
                 // implement editing the product
                 //adapter.notifyDataSetChanged ();
@@ -116,7 +123,7 @@ public class BasketActivity extends AppCompatActivity {
 
     /**
      * Check if the product exists in the product list,
-     * @param barcode
+     * @param barcode product barcode
      * @return if exists, return the position of the product in the ArrayList
      *      * else, return -1
      */
@@ -130,16 +137,36 @@ public class BasketActivity extends AppCompatActivity {
     }
 
     private void getProductInfo(String storeId, String  barcode, String barcodeType){
+        //todo
+        // remove manual assignment to barcode
         barcode = "043100633501";
-        Intent intent = new Intent(this, ProductInfoActivity.class);
+        Intent intent = new Intent(this, ProductInfoGetterActivity.class);
         intent.putExtra(SelectStoreActivity.EXTRA_STORE_ID,storeId);
         intent.putExtra(EXTRA_BARCODE,barcode);
         intent.putExtra(EXTRA_BARCODE_TYPE,barcodeType);
         startActivityForResult(intent, REQUEST_CODE_ADD);
     }
-    private void editProduct(Product product){
-        Intent intent = new Intent(this, ProductInfoActivity.class);
 
+    /**
+     * start ProductInfoEditorActivity to edit the quantity
+     * result should be available inside onResult listener
+     * @param position position of the product in the products ArrayList
+     */
+    private void editProduct(int position){
+        Intent intent = new Intent(this, ProductInfoEditorActivity.class);
+        String name = products.get(position).getName();
+        String description = products.get(position).getDescription();
+        double price = products.get(position).getPrice();
+        int quantity = products.get(position).getQuantity();
+        String imageRefPath = products.get(position).getImageRefPath();
+
+        intent.putExtra(EXTRA_NAME, name);
+        intent.putExtra(EXTRA_DESCRIPTION, description);
+        intent.putExtra(EXTRA_PRICE, price);
+        intent.putExtra(EXTRA_QUANTITY, quantity);
+        intent.putExtra(EXTRA_IMAGE_PATH, imageRefPath);
+
+        startActivityForResult(intent, REQUEST_CODE_EDIT);
         //todo
         // implement edit product quantity
     }
