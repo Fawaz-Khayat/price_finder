@@ -55,7 +55,7 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         //assume images path in google cloud always = /images/{barcode}.jpg
-        StorageReference imageRef = storageReference.child("/images/" + product.getBarcode() + ".jpg");
+        StorageReference imageRef = storageReference.child("/images/products/" + product.getBarcode() + ".jpg");
         GlideApp.with(holder.itemView.getContext())
                 .load(imageRef)
                 .into(imageView_product);

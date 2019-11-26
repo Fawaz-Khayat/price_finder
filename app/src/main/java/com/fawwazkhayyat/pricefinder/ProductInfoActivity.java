@@ -70,7 +70,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         //assume images path in google cloud always = /images/{barcode}.jpg
-        StorageReference imageRef = storageReference.child("/images/" + barcode + ".jpg");
+        StorageReference imageRef = storageReference.child("/images/products/" + barcode + ".jpg");
         GlideApp.with(this)
                 .load(imageRef)
                 .into(imageView_product);
