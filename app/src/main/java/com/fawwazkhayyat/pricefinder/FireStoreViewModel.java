@@ -55,19 +55,17 @@ public class FireStoreViewModel extends ViewModel {
         db.collection(PATH_COLLECTION_STORES)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
-
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         Log.d("DEBUG_TAG","In FireStore onComplete");
-
                         final List storesDocList = task.getResult().getDocuments();
-
                         int length = storesDocList.size();
                         //
                         Store[] tempStores = new Store[length];
                         String info = "";
                         for(int i= 0;i<length;i++){
                             String id, name, address, country, province;
+                            double tax;
                             GeoPoint geoPoint;
 
                             id = ((QueryDocumentSnapshot)storesDocList.get(i)).getId();
@@ -100,6 +98,10 @@ public class FireStoreViewModel extends ViewModel {
                             if(((DocumentSnapshot)storesDocList.get(i)).contains("geopoint")){
                                 geoPoint = (GeoPoint) ((DocumentSnapshot) storesDocList.get(i)).get("geopoint");
                                 tempStore.setGeopoint(geoPoint);
+                            }
+                            if(((DocumentSnapshot)storesDocList.get(i)).contains("tax")){
+                                tax = (double) ((DocumentSnapshot) storesDocList.get(i)).get("tax");
+                                tempStore.setTax(tax);
                             }
                             tempStores[i] = tempStore;
                         }

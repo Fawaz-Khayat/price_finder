@@ -12,7 +12,7 @@ public class Store {
     private String country;
     private String province;
     private GeoPoint geoPoint;
-
+    private double tax;
 
     Store(String id){
         this.id = id;
@@ -60,6 +60,14 @@ public class Store {
 
     public void setGeopoint(GeoPoint geopoint) {
         this.geoPoint = geopoint;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 }
 

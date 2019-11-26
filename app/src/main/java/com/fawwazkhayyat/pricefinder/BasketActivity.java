@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class BasketActivity extends AppCompatActivity {
@@ -30,11 +31,12 @@ public class BasketActivity extends AppCompatActivity {
 
 
     private RecyclerView recyclerView;
-    private TextView textView_result;
+    private TextView textView_result, textView_tax, textView_subtotal, textView_total;
 
     //final SharedDataSingleton singleton = SharedDataSingleton.getInstance();
     private ArrayList<Product> products;
     private String storeId;
+    private double subTotal, totalTax, total, storeTax;
 
     private BasketRecyclerViewAdapter adapter;
     @Override
@@ -55,9 +57,17 @@ public class BasketActivity extends AppCompatActivity {
             }
         }
 
-        storeId = getIntent().getStringExtra(SelectStoreActivity.EXTRA_STORE_ID);
+        Intent intent = getIntent();
+        storeId = intent.getStringExtra(SelectStoreActivity.EXTRA_STORE_ID);
+        storeTax = intent.getDoubleExtra(SelectStoreActivity.EXTRA_STORE_TAX,-1.00);
+        //todo
+        // check if storeTax <= 0
 
         textView_result = findViewById(R.id.textView_result);
+        textView_subtotal = findViewById(R.id.textView_subTotal);
+        textView_tax = findViewById(R.id.textView_tax);
+        textView_total = findViewById(R.id.textView_total);
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BasketRecyclerViewAdapter(products);
@@ -113,6 +123,8 @@ public class BasketActivity extends AppCompatActivity {
                 product.setImageRefPath(data.getStringExtra(ProductInfoActivity.EXTRA_IMAGE_PATH));
                 products.add(product);
                 adapter.notifyItemInserted(products.size());
+
+                recalculateBasket();
                 break;
             case REQUEST_CODE_EDIT:
                 int position = data.getIntExtra(ProductInfoEditorActivity.EXTRA_POSITION,-1);
@@ -121,8 +133,22 @@ public class BasketActivity extends AppCompatActivity {
                 // check if either position or quantity < 0
                 products.get(position).setQuantity(quantity);
                 adapter.notifyItemChanged (position);
+                recalculateBasket();
                 break;
         }
+    }
+
+    private void recalculateBasket(){
+        subTotal = 0;
+        DecimalFormat decimalFormat = new DecimalFormat("$0.00");
+        for(int i=0;i<products.size();i++){
+            subTotal = subTotal + (products.get(i).getPrice() * products.get(i).getQuantity());
+        }
+        totalTax = subTotal * storeTax;
+        total = subTotal + totalTax;
+        textView_subtotal.setText(decimalFormat.format(subTotal));
+        textView_tax.setText(decimalFormat.format(totalTax));
+        textView_total.setText(decimalFormat.format(total));
     }
 
     /**

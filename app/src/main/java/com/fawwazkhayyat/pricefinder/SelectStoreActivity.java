@@ -18,9 +18,11 @@ import java.util.Arrays;
 public class SelectStoreActivity extends AppCompatActivity {
     //final String EXTRA_BASKET_TYPE = "com.fawwazkhayyat.pricefinder.BASKET_TYPE";
     static final String EXTRA_STORE_ID = "com.fawwazkhayyat.pricefinder.STORE_ID";
+    static final String EXTRA_STORE_TAX = "com.fawwazkhayyat.pricefinder.STORE_TAX";
     final String TAG = "DEBUG_TAG";
 
     private String storeId;
+    private double tax;
 
     Spinner spinner_selectStore;
     TextView textView_storeInfo;
@@ -43,6 +45,7 @@ public class SelectStoreActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     storeId = stores[position].getId();
+                    tax = stores[position].getTax();
                     //todo
                     //add more info: Name, address, ...
                     textView_storeInfo.setText(storeId);
@@ -73,6 +76,7 @@ public class SelectStoreActivity extends AppCompatActivity {
         intent.putExtra(MainActivity.EXTRA_BASKET_TYPE,
                 getIntent().getStringExtra(MainActivity.EXTRA_BASKET_TYPE));
         intent.putExtra(EXTRA_STORE_ID, storeId);
+        intent.putExtra(EXTRA_STORE_TAX, tax);
         startActivity(intent);
     }
 }
