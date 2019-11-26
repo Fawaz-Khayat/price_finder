@@ -40,7 +40,9 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
         TextView textView_total = linearLayout.findViewById(R.id.textView_total);
 
         Product product = products.get(position);
-        textView_name.setText(product.getName());
+        // because of limited data in the database,
+        // use description instead of name for now.
+        textView_name.setText(product.getDescription());
         textView_quantity.setText(String.valueOf(product.getQuantity()) + "x");
         textView_price.setText("$" + String.valueOf(product.getPrice()));
         textView_total.setText("$"+(product.getPrice()*product.getQuantity()));

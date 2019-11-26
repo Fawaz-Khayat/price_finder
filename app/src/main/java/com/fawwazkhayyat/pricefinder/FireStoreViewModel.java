@@ -45,7 +45,6 @@ public class FireStoreViewModel extends ViewModel {
 
         if(product == null){
             product = new MutableLiveData<>();
-            Product tempProduct = new Product(barcode);;
             loadProduct(storeId, barcode);
         }
         return product;
@@ -116,18 +115,23 @@ public class FireStoreViewModel extends ViewModel {
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        Product tempProduct = new Product(barcode);
                         DocumentSnapshot docResult = task.getResult();
-                        if(docResult!=null){
-                            if(docResult.contains("name"))
-                                tempProduct.setName((String) docResult.get("name"));
+
+                        if(docResult.exists()){
+                            Product tempProduct = new Product(barcode);
+                            if(docResult.contains("description"))
+                                tempProduct.setDescription((String) docResult.get("description"));
                             if(docResult.contains("price"))
                                 tempProduct.setPrice((double)docResult.getDouble("price"));
+                            product.setValue(tempProduct);
                         }
+                        else
+                            product.setValue(null);
                         Log.d("DEBUG_TAG", "loadProduct onComplete:");
 
                         // another data call to get the image reference
                         ////////////////////////
+                        /*
                         db.document("/products/"+barcode)
                                 .get()
                                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -159,6 +163,8 @@ public class FireStoreViewModel extends ViewModel {
                                     }
                                 });
                         /////////////////////
+
+                         */
                     }
                 });
     }

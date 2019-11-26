@@ -14,6 +14,7 @@ public class ProductInfoEditorActivity extends ProductInfoActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
+        barcode = intent.getStringExtra(BasketActivity.EXTRA_BARCODE);
         name = intent.getStringExtra(BasketActivity.EXTRA_NAME);
         description = intent.getStringExtra(BasketActivity.EXTRA_DESCRIPTION);
         price = intent.getDoubleExtra(BasketActivity.EXTRA_PRICE,0.0);

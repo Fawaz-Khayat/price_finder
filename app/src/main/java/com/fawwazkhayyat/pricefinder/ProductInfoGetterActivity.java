@@ -24,9 +24,15 @@ public class ProductInfoGetterActivity extends ProductInfoActivity {
         FireStoreViewModel fireStoreViewModel = ViewModelProviders.of(this).get(FireStoreViewModel.class);
         fireStoreViewModel.getProduct(storeId, barcode).observe(this, product -> {
             Log.d("DEBUG_TAG", "ProductInfoActivity: receiving data from fireStoreViewModel");
-            quantity = 1;
-            getDataFromProduct(product);
-            populateProductInfo();
+            if(product!=null){
+                quantity = 1;
+                getDataFromProduct(product);
+                populateProductInfo();
+            }
+            else{
+                setResult(RESULT_CANCELED);
+                finish();
+            }
         });
     }
 
@@ -34,6 +40,7 @@ public class ProductInfoGetterActivity extends ProductInfoActivity {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_BARCODE,barcode);
         intent.putExtra(EXTRA_NAME,name);
+        intent.putExtra(EXTRA_DESCRIPTION,description);
         intent.putExtra(EXTRA_QUANTITY,quantity);
         intent.putExtra(EXTRA_PRICE,price);
         intent.putExtra(EXTRA_IMAGE_PATH,imagePath);

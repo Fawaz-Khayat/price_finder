@@ -19,6 +19,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
     static final int RESULT_CODE = 1001;
     static final String EXTRA_BARCODE = "com.fawwazkhayyat.pricefinder.BARCODE";
     static final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder.NAME";
+    static final String EXTRA_DESCRIPTION = "com.fawwazkhayyat.pricefinder.DESCRIPTION";
     static final String EXTRA_QUANTITY= "com.fawwazkhayyat.pricefinder.QUANTITY";
     static final String EXTRA_PRICE = "com.fawwazkhayyat.pricefinder.PRICE";
     static final String EXTRA_IMAGE_PATH = "com.fawwazkhayyat.pricefinder.IMAGE_PATH";
@@ -61,12 +62,15 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
         name = product.getName();
         description = product.getDescription();
         price = product.getPrice();
-        imagePath = product.getImageRefPath();
+        //todo
+        // review this
+        //imagePath = product.getImageRefPath();
     }
     protected void populateProductInfo(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
-        StorageReference imageRef = storageReference.child(imagePath);
+        //assume images path in google cloud always = /images/{barcode}.jpg
+        StorageReference imageRef = storageReference.child("/images/" + barcode + ".jpg");
         GlideApp.with(this)
                 .load(imageRef)
                 .into(imageView_product);

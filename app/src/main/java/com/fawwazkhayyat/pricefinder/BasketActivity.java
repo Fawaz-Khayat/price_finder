@@ -83,6 +83,7 @@ public class BasketActivity extends AppCompatActivity {
     // Get the scan results:
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        textView_result.setText("");
         switch (requestCode){
             case IntentIntegrator.REQUEST_CODE:
                 IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -93,7 +94,7 @@ public class BasketActivity extends AppCompatActivity {
                         String barcode = result.getContents();
                         //todo
                         // remove manual assignment to barcode
-                        barcode = "043100633501";
+                        // barcode = "762111898173";
                         String barcodeType = result.getFormatName();
                         Toast.makeText(this, "Scanned: " + barcode, Toast.LENGTH_LONG).show();
                         // check if the product already in the basket
@@ -112,12 +113,21 @@ public class BasketActivity extends AppCompatActivity {
                     super.onActivityResult(requestCode, resultCode, data);
                 }
                 break;
-            //request code for product info
+                //request code for new product info
             case REQUEST_CODE_ADD:
                 Log.d("DEBUG_TAG", "onActivityResult: product info");
 
+                if(resultCode==RESULT_CANCELED){
+                    Toast.makeText(this,
+                            "Product was not found in this store!",
+                            Toast.LENGTH_LONG)
+                            .show();
+                    textView_result.setText("Sorry! Product was not found in this store!");
+                    break;
+                }
                 Product product = new Product(data.getStringExtra(ProductInfoActivity.EXTRA_BARCODE));
                 product.setName(data.getStringExtra(ProductInfoActivity.EXTRA_NAME));
+                product.setDescription(data.getStringExtra(ProductInfoActivity.EXTRA_DESCRIPTION));
                 product.setPrice(data.getDoubleExtra(ProductInfoActivity.EXTRA_PRICE,0.0));
                 product.setQuantity(data.getIntExtra(ProductInfoActivity.EXTRA_QUANTITY,0));
                 product.setImageRefPath(data.getStringExtra(ProductInfoActivity.EXTRA_IMAGE_PATH));
@@ -126,6 +136,7 @@ public class BasketActivity extends AppCompatActivity {
 
                 recalculateBasket();
                 break;
+                // request code for edited product info
             case REQUEST_CODE_EDIT:
                 int position = data.getIntExtra(ProductInfoEditorActivity.EXTRA_POSITION,-1);
                 int quantity = data.getIntExtra(ProductInfoEditorActivity.EXTRA_QUANTITY, -1);
@@ -181,6 +192,7 @@ public class BasketActivity extends AppCompatActivity {
      */
     private void editProduct(int position){
         Intent intent = new Intent(this, ProductInfoEditorActivity.class);
+        String barcode = products.get(position).getBarcode();
         String name = products.get(position).getName();
         String description = products.get(position).getDescription();
         double price = products.get(position).getPrice();
@@ -188,6 +200,7 @@ public class BasketActivity extends AppCompatActivity {
         String imageRefPath = products.get(position).getImageRefPath();
 
         intent.putExtra(EXTRA_POSITION,position);
+        intent.putExtra(EXTRA_BARCODE, barcode);
         intent.putExtra(EXTRA_NAME, name);
         intent.putExtra(EXTRA_DESCRIPTION, description);
         intent.putExtra(EXTRA_PRICE, price);
