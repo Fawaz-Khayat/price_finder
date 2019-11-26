@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ public class BasketActivity extends AppCompatActivity {
 
     //final SharedDataSingleton singleton = SharedDataSingleton.getInstance();
     private ArrayList<Product> products;
-    private String storeId, storeAddress;
+    private String storeId, storeName, storeAddress;
     private double subTotal, totalTax, total, storeTax;
 
     private BasketRecyclerViewAdapter adapter;
@@ -63,6 +64,7 @@ public class BasketActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         storeId = intent.getStringExtra(SelectStoreActivity.EXTRA_STORE_ID);
+        storeName = intent.getStringExtra(SelectStoreActivity.EXTRA_STORE_NAME);
         storeAddress = intent.getStringExtra(SelectStoreActivity.EXTRA_STORE_ADDRESS);
         storeTax = intent.getDoubleExtra(SelectStoreActivity.EXTRA_STORE_TAX,-1.00);
         //todo
@@ -99,7 +101,8 @@ public class BasketActivity extends AppCompatActivity {
                         String barcode = result.getContents();
                         //todo
                         // remove manual assignment to barcode
-                        // barcode = "762111898173";
+                        //762111898173 in ub store
+                        //barcode = "762111898173";
                         String barcodeType = result.getFormatName();
                         // check if the product already in the basket
                         // if already in the basket, edit
@@ -133,8 +136,11 @@ public class BasketActivity extends AppCompatActivity {
                 product.setName(data.getStringExtra(ProductInfoActivity.EXTRA_NAME));
                 product.setDescription(data.getStringExtra(ProductInfoActivity.EXTRA_DESCRIPTION));
                 product.setPrice(data.getDoubleExtra(ProductInfoActivity.EXTRA_PRICE,0.0));
-                if (data.hasExtra(ProductInfoActivity.EXTRA_IS_TAXABLE))
-                    product.setTaxable(data.getBooleanExtra(ProductInfoActivity.EXTRA_IS_TAXABLE,true));
+                if (data.hasExtra(ProductInfoActivity.EXTRA_IS_TAXABLE)) {
+                    product.setTaxable(data.getBooleanExtra(ProductInfoActivity.EXTRA_IS_TAXABLE, true));
+                    if(product.isTaxable())
+                        product.setTax(storeTax);
+                }
                 else
                     Log.d("DEBUG_TAG", "onActivityResult: data has no EXTRA_IS_TAXABLE");
                     //todo
@@ -236,20 +242,63 @@ public class BasketActivity extends AppCompatActivity {
     }
 
     public void save_click(View view){
-        /*
-
+        ImageButton imageButton_save = findViewById(R.id.imageButton_save);
+        imageButton_save.setEnabled(false);
+        imageButton_save.setAlpha((float)0.4);
+        String list_id;
         //todo
         // save basket items to the local SQLite database
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        ContentValues listTableValues = new ContentValues(3);
-        listTableValues.put(SQLiteContract.Lists.COLUMN_NAME_LIST_ID)
+        // insert data into stores table
+        ContentValues storesValues = new ContentValues(1);
+        storesValues.put(SQLiteContract.Stores.COLUMN_NAME_STORE_ID,storeId);
+        storesValues.put(SQLiteContract.Stores.COLUMN_NAME_NAME,storeName);
+        storesValues.put(SQLiteContract.Stores.COLUMN_NAME_ADDRESS, storeAddress);
+
+        db.insertWithOnConflict(SQLiteContract.Stores.TABLE_NAME,
+                null,
+                storesValues,
+                SQLiteDatabase.CONFLICT_IGNORE);
+
+        Log.d("DEBUG_TAG", "save_click: Inserting row into stores table");
+
+        // insert data into products table
+        ContentValues productsValues = new ContentValues(products.size());
+        for(int i=0;i<products.size();i++){
+            productsValues.put(SQLiteContract.Products.COLUMN_NAME_BARCODE,products.get(i).getBarcode());
+            productsValues.put(SQLiteContract.Products.COLUMN_NAME_DESCRIPTION,products.get(i).getDescription());
+            db.insertWithOnConflict(SQLiteContract.Products.TABLE_NAME,
+                    null,
+                    productsValues,
+                    SQLiteDatabase.CONFLICT_IGNORE);
+        }
+
+        // insert data into lists table
+        list_id = SQLiteContract.Lists.getNewDate();
+        ContentValues listsValues = new ContentValues(1);
+        listsValues.put(SQLiteContract.Lists.COLUMN_NAME_DATE_TIME,
+                list_id);
+        listsValues.put(SQLiteContract.Lists.COLUMN_NAME_STORE_ID, storeId);
         db.insert(SQLiteContract.Lists.TABLE_NAME,
                 null,
-                )
+                listsValues);
 
-         */
+        // insert data into list_items table
+        ContentValues listsItemsValues = new ContentValues(products.size());
+        listsItemsValues.put(SQLiteContract.ListItems.COLUMN_NAME_LIST_ID,list_id);
+        for(int i=0;i<products.size();i++){
+            listsItemsValues.put(SQLiteContract.ListItems.COLUMN_NAME_BARCODE,products.get(i).getBarcode());
+            listsItemsValues.put(SQLiteContract.ListItems.COLUMN_NAME_PRICE,products.get(i).getPrice());
+            listsItemsValues.put(SQLiteContract.ListItems.COLUMN_NAME_QUANTITY,products.get(i).getQuantity());
+            listsItemsValues.put(SQLiteContract.ListItems.COLUMN_NAME_TAX,products.get(i).getTax());
+            db.insert(SQLiteContract.ListItems.TABLE_NAME,
+                    null,
+                    listsItemsValues);
+        }
+        db.close();
 
+        Toast.makeText(this,"Basket is saved!",Toast.LENGTH_LONG).show();
     }
 }

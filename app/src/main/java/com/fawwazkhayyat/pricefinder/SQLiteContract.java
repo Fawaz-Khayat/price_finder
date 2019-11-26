@@ -4,6 +4,11 @@ package com.fawwazkhayyat.pricefinder;
 //https://sqlite.org/foreignkeys.html
 //https://stackoverflow.com/questions/734689/sqlite-primary-key-on-multiple-columns
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
 class SQLiteContract {
 
     private SQLiteContract() {}
@@ -28,15 +33,11 @@ class SQLiteContract {
     static class Products{
         static final String TABLE_NAME = "products";
         static final String COLUMN_NAME_BARCODE = "_barcode";
-        static final String COLUMN_NAME_NAME = "name";
-        static final String COLUMN_NAME_PICTURE = "picture";
         static final String COLUMN_NAME_DESCRIPTION = "description";
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         COLUMN_NAME_BARCODE + " TEXT NOT NULL PRIMARY KEY, " +
-                        COLUMN_NAME_NAME + " TEXT, " +
-                        COLUMN_NAME_PICTURE + " TEXT, " +
                         COLUMN_NAME_DESCRIPTION + " TEXT);";
 
         static final String SQL_DELETE_TABLE =
@@ -45,15 +46,13 @@ class SQLiteContract {
 
     static class Lists{
         static final String TABLE_NAME = "lists";
-        static final String COLUMN_NAME_LIST_ID = "_id";
         static final String COLUMN_NAME_STORE_ID = "store_id";
         static final String COLUMN_NAME_DATE_TIME = "date_time";
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
-                        COLUMN_NAME_LIST_ID + " INTEGER NOT NULL PRIMARY KEY, " +
+                        COLUMN_NAME_DATE_TIME + " TEXT NOT NULL PRIMARY KEY, " +
                         COLUMN_NAME_STORE_ID + " TEXT NOT NULL, " +
-                        COLUMN_NAME_DATE_TIME + " TEXT, " +
 
                         //FOREIGN KEY(store_id) REFERENCES stores(store_id)
                         "FOREIGN KEY(" + COLUMN_NAME_STORE_ID + ") REFERENCES " +
@@ -62,6 +61,19 @@ class SQLiteContract {
 
         static final String SQL_DELETE_TABLE =
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
+
+        static final String DATE_TIME_OUTPUT_FORMAT = "EE dd MMM yyyy, HH:mm, z";
+
+        static String getNewDate(){
+            String DATE_TIME_SAVE_FORMAT = "dd MMM yyyy,HH:mm,z";
+            //https://stackoverflow.com/questions/21349475/calendar-getinstancetimezone-gettimezoneutc-is-not-returning-utc-time
+            // save the date in the table in GMT time zone
+            TimeZone timeZone = TimeZone.getTimeZone("GMT");
+            Calendar calendar = Calendar.getInstance(timeZone);
+            SimpleDateFormat saveDateFormat = new SimpleDateFormat(DATE_TIME_SAVE_FORMAT, Locale.CANADA);
+            saveDateFormat.setTimeZone(timeZone);
+            return saveDateFormat.format(calendar.getTime());
+        }
     }
 
     static class ListItems{
@@ -71,7 +83,6 @@ class SQLiteContract {
         static final String COLUMN_NAME_PRICE = "price";
         static final String COLUMN_NAME_QUANTITY = "quantity";
         static final String COLUMN_NAME_TAX = "tax";
-        static final String COLUMN_NAME_TOTAL = "total";
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
@@ -80,11 +91,10 @@ class SQLiteContract {
                         COLUMN_NAME_PRICE + " REAL, " +
                         COLUMN_NAME_QUANTITY + " INTEGER, " +
                         COLUMN_NAME_TAX + " REAL, " +
-                        COLUMN_NAME_TOTAL + " REAL, " +
 
                         //FOREIGN KEY(list_id) REFERENCES lists(_id)
                         "FOREIGN KEY(" + COLUMN_NAME_LIST_ID + ") REFERENCES " +
-                            Lists.TABLE_NAME + "(" + Lists.COLUMN_NAME_LIST_ID + "), " +
+                            Lists.TABLE_NAME + "(" + Lists.COLUMN_NAME_DATE_TIME + "), " +
                         //FOREIGN KEY(barcode) REFERENCES products(_barcode)
                         "FOREIGN KEY(" + COLUMN_NAME_BARCODE + ") REFERENCES " +
                             Products.TABLE_NAME + "(" + Products.COLUMN_NAME_BARCODE + "), " +

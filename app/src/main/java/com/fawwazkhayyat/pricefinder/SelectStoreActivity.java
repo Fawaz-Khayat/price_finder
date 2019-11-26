@@ -98,6 +98,7 @@ public class SelectStoreActivity extends AppCompatActivity {
         intent.putExtra(MainActivity.EXTRA_BASKET_TYPE,
                 getIntent().getStringExtra(MainActivity.EXTRA_BASKET_TYPE));
         intent.putExtra(EXTRA_STORE_ID, storeId);
+        intent.putExtra(EXTRA_STORE_NAME, storeName);
         intent.putExtra(EXTRA_STORE_ADDRESS, storeAddress);
         intent.putExtra(EXTRA_STORE_TAX, tax);
         startActivity(intent);

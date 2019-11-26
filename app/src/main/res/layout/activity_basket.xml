@@ -154,6 +154,7 @@
             android:layout_height="90dp"
             android:layout_marginStart="32dp"
             android:layout_weight="1"
+            android:alpha="1"
             android:background="@android:color/transparent"
             android:onClick="save_click"
             android:scaleType="fitCenter"
