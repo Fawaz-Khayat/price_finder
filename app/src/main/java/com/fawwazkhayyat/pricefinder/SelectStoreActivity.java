@@ -22,11 +22,12 @@ import java.util.Arrays;
 public class SelectStoreActivity extends AppCompatActivity {
     //final String EXTRA_BASKET_TYPE = "com.fawwazkhayyat.pricefinder.BASKET_TYPE";
     static final String EXTRA_STORE_ID = "com.fawwazkhayyat.pricefinder.STORE_ID";
+    static final String EXTRA_STORE_NAME = "com.fawwazkhayyat.pricefinder.STORE_NAME";
     static final String EXTRA_STORE_ADDRESS = "com.fawwazkhayyat.pricefinder.STORE_ADDRESS";
     static final String EXTRA_STORE_TAX = "com.fawwazkhayyat.pricefinder.STORE_TAX";
     final String TAG = "DEBUG_TAG";
 
-    private String storeId, storeAddress;
+    private String storeId, storeName, storeAddress;
     private double tax;
 
     Spinner spinner_selectStore;
@@ -54,10 +55,11 @@ public class SelectStoreActivity extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     storeId = stores[position].getId();
                     storeAddress = stores[position].getAddress();
+                    storeName = stores[position].getName();
                     tax = stores[position].getTax();
                     //todo
                     //add more info: Name, address, ...
-                    textView_name.setText(storeId);
+                    textView_name.setText(storeName);
                     textView_address.setText(storeAddress);
 
                     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -67,6 +69,8 @@ public class SelectStoreActivity extends AppCompatActivity {
                     GlideApp.with(view.getContext())
                             .load(imageRef)
                             .into(imageView_store);
+                    //todo
+                    // have a placeholder image while the store image loading
                 }
 
                 @Override
