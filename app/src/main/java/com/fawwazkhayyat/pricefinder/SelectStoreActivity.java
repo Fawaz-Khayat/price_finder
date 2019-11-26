@@ -22,6 +22,7 @@ import java.util.Arrays;
 public class SelectStoreActivity extends AppCompatActivity {
     //final String EXTRA_BASKET_TYPE = "com.fawwazkhayyat.pricefinder.BASKET_TYPE";
     static final String EXTRA_STORE_ID = "com.fawwazkhayyat.pricefinder.STORE_ID";
+    static final String EXTRA_STORE_ADDRESS = "com.fawwazkhayyat.pricefinder.STORE_ADDRESS";
     static final String EXTRA_STORE_TAX = "com.fawwazkhayyat.pricefinder.STORE_TAX";
     final String TAG = "DEBUG_TAG";
 
@@ -93,6 +94,7 @@ public class SelectStoreActivity extends AppCompatActivity {
         intent.putExtra(MainActivity.EXTRA_BASKET_TYPE,
                 getIntent().getStringExtra(MainActivity.EXTRA_BASKET_TYPE));
         intent.putExtra(EXTRA_STORE_ID, storeId);
+        intent.putExtra(EXTRA_STORE_ADDRESS, storeAddress);
         intent.putExtra(EXTRA_STORE_TAX, tax);
         startActivity(intent);
     }

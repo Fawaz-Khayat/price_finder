@@ -39,6 +39,7 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
     public void onBindViewHolder(@NonNull BasketRecyclerViewAdapter.BasketRecyclerViewHolder holder, int position) {
         LinearLayout linearLayout = holder.linearLayout;
         linearLayout.setTag(position);
+        TextView textView_taxable = linearLayout.findViewById(R.id.textView_taxable);
         TextView textView_name = linearLayout.findViewById(R.id.textView_name);
         TextView textView_quantity = linearLayout.findViewById(R.id.textView_quantity);
         TextView textView_price = linearLayout.findViewById(R.id.textView_price);
@@ -46,6 +47,8 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
         ImageView imageView_product = linearLayout.findViewById(R.id.imageView_product);
 
         Product product = products.get(position);
+        if(product.isTaxable())
+            textView_taxable.setText("(T)");
         // because of limited data in the database,
         // use description instead of name for now.
         textView_name.setText(product.getDescription());

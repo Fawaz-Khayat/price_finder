@@ -120,51 +120,16 @@ public class FireStoreViewModel extends ViewModel {
                         if(docResult.exists()){
                             Product tempProduct = new Product(barcode);
                             if(docResult.contains("description"))
-                                tempProduct.setDescription((String) docResult.get("description"));
+                                tempProduct.setDescription(docResult.getString("description"));
                             if(docResult.contains("price"))
-                                tempProduct.setPrice((double)docResult.getDouble("price"));
+                                tempProduct.setPrice(docResult.getDouble("price"));
+                            if(docResult.contains("isTaxable"))
+                                tempProduct.setTaxable(docResult.getBoolean("isTaxable"));
                             product.setValue(tempProduct);
                         }
                         else
                             product.setValue(null);
                         Log.d("DEBUG_TAG", "loadProduct onComplete:");
-
-                        // another data call to get the image reference
-                        ////////////////////////
-                        /*
-                        db.document("/products/"+barcode)
-                                .get()
-                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        Log.d("DEBUG_TAG", "onSuccess: loadProductImageRef");
-                                        if(documentSnapshot!=null) {
-                                            if (documentSnapshot.contains("imageRefPath")) {
-
-                                                tempProduct.setImageRefPath(documentSnapshot.getString("imageRefPath"));
-                                                //todo
-                                                // remove below commented line
-                                                //tempProduct.setImageRef("images/pexels_photo_2535207.jpeg");
-                                            }
-                                        }
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d("DEBUG_TAG", "onFailure: " + e);
-                                    }
-                                })
-                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        Log.d("DEBUG_TAG", "onComplete: loadProductImageRef");
-                                        product.setValue(tempProduct);
-                                    }
-                                });
-                        /////////////////////
-
-                         */
                     }
                 });
     }

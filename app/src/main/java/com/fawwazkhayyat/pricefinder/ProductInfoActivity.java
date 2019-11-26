@@ -22,6 +22,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
     static final String EXTRA_DESCRIPTION = "com.fawwazkhayyat.pricefinder.DESCRIPTION";
     static final String EXTRA_QUANTITY= "com.fawwazkhayyat.pricefinder.QUANTITY";
     static final String EXTRA_PRICE = "com.fawwazkhayyat.pricefinder.PRICE";
+    static final String EXTRA_IS_TAXABLE = "com.fawwazkhayyat.pricefinder.IS_TAXABLE";
     static final String EXTRA_IMAGE_PATH = "com.fawwazkhayyat.pricefinder.IMAGE_PATH";
 
     protected TextView textView_name, textView_description, textView_price, textView_quantity;
@@ -30,6 +31,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
     protected String storeId, barcode, barcodeType, name, description, imagePath;
     protected double price, tax, total;
     protected int quantity;
+    protected boolean isTaxable;
 
     abstract public void addToBasket_click(View view);
 
@@ -62,6 +64,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
         name = product.getName();
         description = product.getDescription();
         price = product.getPrice();
+        isTaxable = product.isTaxable();
         //todo
         // review this
         //imagePath = product.getImageRefPath();

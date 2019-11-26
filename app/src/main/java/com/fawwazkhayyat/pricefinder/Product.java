@@ -9,6 +9,8 @@ public class Product {
     private String barcode;
     private String name;
     private double price;
+    private boolean isTaxable;
+    private double tax;
     private String imageRefPath;
     private String description;
     private int quantity;
@@ -35,6 +37,22 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isTaxable() {
+        return isTaxable;
+    }
+
+    public void setTaxable(boolean taxable) {
+        isTaxable = taxable;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 
     public String getDescription() {

@@ -39,7 +39,7 @@ public class BasketActivity extends AppCompatActivity {
 
     //final SharedDataSingleton singleton = SharedDataSingleton.getInstance();
     private ArrayList<Product> products;
-    private String storeId;
+    private String storeId, storeAddress;
     private double subTotal, totalTax, total, storeTax;
 
     private BasketRecyclerViewAdapter adapter;
@@ -63,6 +63,7 @@ public class BasketActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         storeId = intent.getStringExtra(SelectStoreActivity.EXTRA_STORE_ID);
+        storeAddress = intent.getStringExtra(SelectStoreActivity.EXTRA_STORE_ADDRESS);
         storeTax = intent.getDoubleExtra(SelectStoreActivity.EXTRA_STORE_TAX,-1.00);
         //todo
         // check if storeTax <= 0
@@ -133,6 +134,12 @@ public class BasketActivity extends AppCompatActivity {
                 product.setName(data.getStringExtra(ProductInfoActivity.EXTRA_NAME));
                 product.setDescription(data.getStringExtra(ProductInfoActivity.EXTRA_DESCRIPTION));
                 product.setPrice(data.getDoubleExtra(ProductInfoActivity.EXTRA_PRICE,0.0));
+                if (data.hasExtra(ProductInfoActivity.EXTRA_IS_TAXABLE))
+                    product.setTaxable(data.getBooleanExtra(ProductInfoActivity.EXTRA_IS_TAXABLE,true));
+                else
+                    Log.d("DEBUG_TAG", "onActivityResult: data has no EXTRA_IS_TAXABLE");
+                    //todo
+                    // handle the case of no taxable information
                 product.setQuantity(data.getIntExtra(ProductInfoActivity.EXTRA_QUANTITY,0));
                 product.setImageRefPath(data.getStringExtra(ProductInfoActivity.EXTRA_IMAGE_PATH));
                 products.add(product);
@@ -155,11 +162,15 @@ public class BasketActivity extends AppCompatActivity {
 
     private void recalculateBasket(){
         subTotal = 0;
+        totalTax = 0;
         DecimalFormat decimalFormat = new DecimalFormat("$0.00");
         for(int i=0;i<products.size();i++){
-            subTotal = subTotal + (products.get(i).getPrice() * products.get(i).getQuantity());
+            Product product = products.get(i);
+            double productSubTotal = product.getPrice() * product.getQuantity();
+            subTotal = subTotal + productSubTotal;
+            if(product.isTaxable())
+                totalTax = totalTax + (productSubTotal * storeTax);
         }
-        totalTax = subTotal * storeTax;
         total = subTotal + totalTax;
         textView_subtotal.setText(decimalFormat.format(subTotal));
         textView_tax.setText(decimalFormat.format(totalTax));
@@ -221,17 +232,19 @@ public class BasketActivity extends AppCompatActivity {
 
     public void save_click(View view){
         /*
+
         //todo
         // save basket items to the local SQLite database
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues listTableValues = new ContentValues(3);
-        listTableValues.put(SQLiteContract.Lists.COLUMN_NAME_LIST_ID,)
+        listTableValues.put(SQLiteContract.Lists.COLUMN_NAME_LIST_ID)
         db.insert(SQLiteContract.Lists.TABLE_NAME,
                 null,
                 )
 
          */
+
     }
 }
