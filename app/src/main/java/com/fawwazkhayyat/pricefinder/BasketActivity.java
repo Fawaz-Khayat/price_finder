@@ -101,7 +101,6 @@ public class BasketActivity extends AppCompatActivity {
                         // remove manual assignment to barcode
                         // barcode = "762111898173";
                         String barcodeType = result.getFormatName();
-                        Toast.makeText(this, "Scanned: " + barcode, Toast.LENGTH_LONG).show();
                         // check if the product already in the basket
                         // if already in the basket, edit
                         // else, add

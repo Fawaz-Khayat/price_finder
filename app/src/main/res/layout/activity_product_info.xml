@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
+    android:padding="25dp"
     tools:context=".ProductInfoActivity">
 
     <TextView
@@ -114,6 +114,16 @@
         android:background="@android:drawable/screen_background_light_transparent"
         android:onClick="addToBasket_click"
         android:src="@drawable/baseline_add_shopping_cart_black_48"
+        app:layout_constraintBottom_toTopOf="@+id/textView_barcode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="barcode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

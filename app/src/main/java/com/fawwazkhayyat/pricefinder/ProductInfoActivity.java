@@ -25,7 +25,8 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
     static final String EXTRA_IS_TAXABLE = "com.fawwazkhayyat.pricefinder.IS_TAXABLE";
     static final String EXTRA_IMAGE_PATH = "com.fawwazkhayyat.pricefinder.IMAGE_PATH";
 
-    protected TextView textView_name, textView_description, textView_price, textView_quantity;
+    protected TextView textView_name, textView_description,
+            textView_price, textView_quantity, textView_barcode;
     protected ImageView imageView_product;
 
     protected String storeId, barcode, barcodeType, name, description, imagePath;
@@ -45,6 +46,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
         textView_price = findViewById(R.id.textView_price);
         textView_quantity = findViewById(R.id.textView_quantity);
         imageView_product = findViewById(R.id.imageView_product);
+        textView_barcode = findViewById(R.id.textView_barcode);
     }
 
     public void decrease_click(View view){
@@ -82,6 +84,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
         textView_description.setText(description);
         textView_price.setText("$"+String.valueOf(price));
         textView_quantity.setText(String.valueOf(quantity));
+        textView_barcode.setText(barcode);
     }
 
     //todo
