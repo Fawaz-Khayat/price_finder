@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecyclerViewAdapter.BasketRecyclerViewHolder> {
     private ArrayList<Product> products;
+    static final int KEY_POSITION = 1;
 
     public BasketRecyclerViewAdapter(ArrayList<Product> products){
         super();
@@ -37,6 +38,7 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
     @Override
     public void onBindViewHolder(@NonNull BasketRecyclerViewAdapter.BasketRecyclerViewHolder holder, int position) {
         LinearLayout linearLayout = holder.linearLayout;
+        linearLayout.setTag(position);
         TextView textView_name = linearLayout.findViewById(R.id.textView_name);
         TextView textView_quantity = linearLayout.findViewById(R.id.textView_quantity);
         TextView textView_price = linearLayout.findViewById(R.id.textView_price);
@@ -57,7 +59,6 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
         GlideApp.with(holder.itemView.getContext())
                 .load(imageRef)
                 .into(imageView_product);
-
     }
 
     @Override

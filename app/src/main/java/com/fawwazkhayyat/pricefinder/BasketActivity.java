@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -208,5 +209,10 @@ public class BasketActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_IMAGE_PATH, imageRefPath);
 
         startActivityForResult(intent, REQUEST_CODE_EDIT);
+    }
+
+    public void item_click(View view){
+        int position = (int)view.getTag();
+        editProduct(position);
     }
 }
