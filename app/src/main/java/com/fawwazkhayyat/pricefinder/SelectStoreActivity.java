@@ -9,8 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Arrays;
 
@@ -21,11 +25,12 @@ public class SelectStoreActivity extends AppCompatActivity {
     static final String EXTRA_STORE_TAX = "com.fawwazkhayyat.pricefinder.STORE_TAX";
     final String TAG = "DEBUG_TAG";
 
-    private String storeId;
+    private String storeId, storeAddress;
     private double tax;
 
     Spinner spinner_selectStore;
-    TextView textView_storeInfo;
+    TextView textView_name,textView_address;
+    ImageView imageView_store;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +38,9 @@ public class SelectStoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_store);
 
         spinner_selectStore = findViewById(R.id.spinner_selectStore);
-        textView_storeInfo = findViewById(R.id.textView_storeInfo);
+        textView_name = findViewById(R.id.textView_name);
+        textView_address = findViewById(R.id.textView_address);
+        imageView_store = findViewById(R.id.imageView_store);
 
         FireStoreViewModel fireStoreViewModel = ViewModelProviders.of(this).get(FireStoreViewModel.class);
         fireStoreViewModel.getStores().observe(this, stores -> {
@@ -45,10 +52,20 @@ public class SelectStoreActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     storeId = stores[position].getId();
+                    storeAddress = stores[position].getAddress();
                     tax = stores[position].getTax();
                     //todo
                     //add more info: Name, address, ...
-                    textView_storeInfo.setText(storeId);
+                    textView_name.setText(storeId);
+                    textView_address.setText(storeAddress);
+
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                    StorageReference storageReference = storage.getReference();
+                    //assume images path in google cloud always = /images/{barcode}.jpg
+                    StorageReference imageRef = storageReference.child("/images/stores/" + storeId + ".jpg");
+                    GlideApp.with(view.getContext())
+                            .load(imageRef)
+                            .into(imageView_store);
                 }
 
                 @Override

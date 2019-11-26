@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -214,5 +217,21 @@ public class BasketActivity extends AppCompatActivity {
     public void item_click(View view){
         int position = (int)view.getTag();
         editProduct(position);
+    }
+
+    public void save_click(View view){
+        /*
+        //todo
+        // save basket items to the local SQLite database
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues listTableValues = new ContentValues(3);
+        listTableValues.put(SQLiteContract.Lists.COLUMN_NAME_LIST_ID,)
+        db.insert(SQLiteContract.Lists.TABLE_NAME,
+                null,
+                )
+
+         */
     }
 }
