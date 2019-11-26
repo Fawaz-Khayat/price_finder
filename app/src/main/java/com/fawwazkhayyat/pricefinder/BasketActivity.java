@@ -153,8 +153,14 @@ public class BasketActivity extends AppCompatActivity {
                 int quantity = data.getIntExtra(ProductInfoEditorActivity.EXTRA_QUANTITY, -1);
                 //todo
                 // check if either position or quantity < 0
-                products.get(position).setQuantity(quantity);
-                adapter.notifyItemChanged (position);
+                if(quantity==0){
+                    products.remove(position);
+                    adapter.notifyItemRemoved(position);
+                }
+                else{
+                    products.get(position).setQuantity(quantity);
+                    adapter.notifyItemChanged (position);
+                }
                 recalculateBasket();
                 break;
         }

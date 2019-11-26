@@ -20,6 +20,7 @@ public class ProductInfoGetterActivity extends ProductInfoActivity {
         barcode = getIntent().getStringExtra(BasketActivity.EXTRA_BARCODE);
         barcodeType = getIntent().getStringExtra(BasketActivity.EXTRA_BARCODE_TYPE);
 
+        minmumQuantity = 1;
         //get the product info from firestore
         FireStoreViewModel fireStoreViewModel = ViewModelProviders.of(this).get(FireStoreViewModel.class);
         fireStoreViewModel.getProduct(storeId, barcode).observe(this, product -> {

@@ -30,7 +30,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
 
     protected String storeId, barcode, barcodeType, name, description, imagePath;
     protected double price, tax, total;
-    protected int quantity;
+    protected int quantity, minmumQuantity;
     protected boolean isTaxable;
 
     abstract public void addToBasket_click(View view);
@@ -48,7 +48,7 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
     }
 
     public void decrease_click(View view){
-        if(quantity>1)
+        if(quantity>minmumQuantity)
             quantity--;
         textView_quantity.setText(String.valueOf(quantity));
         total = quantity * price;
