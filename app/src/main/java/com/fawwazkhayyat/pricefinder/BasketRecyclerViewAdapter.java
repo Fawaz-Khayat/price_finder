@@ -4,11 +4,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -33,11 +37,11 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
     @Override
     public void onBindViewHolder(@NonNull BasketRecyclerViewAdapter.BasketRecyclerViewHolder holder, int position) {
         LinearLayout linearLayout = holder.linearLayout;
-        ImageButton imageButton_edit = linearLayout.findViewById(R.id.imageButton_edit);
         TextView textView_name = linearLayout.findViewById(R.id.textView_name);
         TextView textView_quantity = linearLayout.findViewById(R.id.textView_quantity);
         TextView textView_price = linearLayout.findViewById(R.id.textView_price);
         TextView textView_total = linearLayout.findViewById(R.id.textView_total);
+        ImageView imageView_product = linearLayout.findViewById(R.id.imageView_product);
 
         Product product = products.get(position);
         // because of limited data in the database,
@@ -46,14 +50,14 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
         textView_quantity.setText(String.valueOf(product.getQuantity()) + "x");
         textView_price.setText("$" + String.valueOf(product.getPrice()));
         textView_total.setText("$"+(product.getPrice()*product.getQuantity()));
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        //assume images path in google cloud always = /images/{barcode}.jpg
+        StorageReference imageRef = storageReference.child("/images/" + product.getBarcode() + ".jpg");
+        GlideApp.with(holder.itemView.getContext())
+                .load(imageRef)
+                .into(imageView_product);
 
-        imageButton_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImageButton imageButton_edit = (ImageButton) v;
-
-            }
-        });
     }
 
     @Override
