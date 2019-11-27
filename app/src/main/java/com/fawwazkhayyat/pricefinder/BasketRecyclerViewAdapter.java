@@ -46,6 +46,7 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
         TextView textView_total = linearLayout.findViewById(R.id.textView_total);
         ImageView imageView_product = linearLayout.findViewById(R.id.imageView_product);
 
+        textView_taxable.setText("");
         Product product = products.get(position);
         if(product.isTaxable())
             textView_taxable.setText("(T)");

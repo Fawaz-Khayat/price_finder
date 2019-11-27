@@ -20,9 +20,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void new_click(View view){
-        SharedDataSingleton sharedDataSingleton = SharedDataSingleton.getInstance();
-        sharedDataSingleton.setNewDate();
-
         Intent  intent = new Intent(this, SelectStoreActivity.class);
         intent.putExtra(EXTRA_BASKET_TYPE, BASKET_TYPE.NEW);
         startActivity(intent);
