@@ -40,9 +40,10 @@
             android:background="@drawable/checkbox_states"
             android:checked="false"
             android:gravity="center"
+            android:onClick="selectAll_click"
             android:textAlignment="center"
             android:textOff=" "
-            android:textOn=" "/>
+            android:textOn=" " />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

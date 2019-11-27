@@ -17,44 +17,44 @@ import java.util.ArrayList;
 
 public class SavedBasketsActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    ToggleButton toggleButton_selectAll;
-    //ArrayList<SavedListItem> savedListItems;
-
+    private RecyclerView recyclerView;
+    private ToggleButton toggleButton_selectAll;
+    private ArrayList<SavedListItem> savedListItems;
+    private SavedBasketRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_baskets);
 
         recyclerView = findViewById(R.id.recyclerView);
-
-        ArrayList<SavedListItem> savedListItems = getSavedLists();
+        savedListItems = getSavedLists();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        SavedBasketRecyclerViewAdapter adapter = new SavedBasketRecyclerViewAdapter(savedListItems);
+        adapter = new SavedBasketRecyclerViewAdapter(savedListItems);
         recyclerView.setAdapter(adapter);
 
         toggleButton_selectAll = findViewById(R.id.toggleButton_selectAll);
-        //toggle check boxes of all list items
-        toggleButton_selectAll.setOnClickListener(new View.OnClickListener() {
+
+    }
+
+    /**
+     * toggle check boxes of all list items
+     * @param view toggleButton_selectAll
+     */
+    public void selectAll_click(View view){
+        //this listener fires after the toggle button already changed the checked state
+        toggleButton_selectAll = (ToggleButton) view;
+        boolean isChecked = toggleButton_selectAll.isChecked();
+        for(int i=0;i<savedListItems.size();i++){
+            savedListItems.get(i).setToggleButtonChecked(isChecked);
+        }
+        // https://stackoverflow.com/questions/43221847/cannot-call-this-method-while-recyclerview-is-computing-a-layout-or-scrolling-wh
+        recyclerView.post(new Runnable() {
             @Override
-            public void onClick(View view) {
-                //this listener fires after the toggle button already changed the checked state
-                toggleButton_selectAll = (ToggleButton) view;
-                boolean isChecked = toggleButton_selectAll.isChecked();
-                for(int i=0;i<savedListItems.size();i++){
-                    savedListItems.get(i).setToggleButtonChecked(isChecked);
-                }
-                // https://stackoverflow.com/questions/43221847/cannot-call-this-method-while-recyclerview-is-computing-a-layout-or-scrolling-wh
-                recyclerView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.notifyDataSetChanged();
-                    }
-                });
+            public void run() {
+                adapter.notifyDataSetChanged();
             }
         });
     }
-
 
     ArrayList<SavedListItem> getSavedLists(){
         ArrayList<SavedListItem> savedListItems = new ArrayList<>();
