@@ -26,10 +26,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void saved_click(View view){
-        Intent  intent = new Intent(this, SelectStoreActivity.class);
+        Intent  intent = new Intent(this, SavedBasketsActivity.class);
         intent.putExtra(EXTRA_BASKET_TYPE, BASKET_TYPE.SAVED);
-
-        // todo
-        // start saved lists activity
+        startActivity(intent);
     }
 }

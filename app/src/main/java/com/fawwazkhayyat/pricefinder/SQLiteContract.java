@@ -4,8 +4,10 @@ package com.fawwazkhayyat.pricefinder;
 //https://sqlite.org/foreignkeys.html
 //https://stackoverflow.com/questions/734689/sqlite-primary-key-on-multiple-columns
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -45,6 +47,9 @@ class SQLiteContract {
     }
 
     static class Lists{
+        static String DATE_TIME_SAVE_FORMAT = "dd MMM yyyy,HH:mm,z";
+        static String DATE_TIME_OUTPUT_FORMAT = "EE dd MMM yyyy, hh:mm a, z";
+
         static final String TABLE_NAME = "lists";
         static final String COLUMN_NAME_STORE_ID = "store_id";
         static final String COLUMN_NAME_DATE_TIME = "date_time";
@@ -62,10 +67,7 @@ class SQLiteContract {
         static final String SQL_DELETE_TABLE =
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
 
-        static final String DATE_TIME_OUTPUT_FORMAT = "EE dd MMM yyyy, HH:mm, z";
-
         static String getNewDate(){
-            String DATE_TIME_SAVE_FORMAT = "dd MMM yyyy,HH:mm,z";
             //https://stackoverflow.com/questions/21349475/calendar-getinstancetimezone-gettimezoneutc-is-not-returning-utc-time
             // save the date in the table in GMT time zone
             TimeZone timeZone = TimeZone.getTimeZone("GMT");
@@ -73,6 +75,12 @@ class SQLiteContract {
             SimpleDateFormat saveDateFormat = new SimpleDateFormat(DATE_TIME_SAVE_FORMAT, Locale.CANADA);
             saveDateFormat.setTimeZone(timeZone);
             return saveDateFormat.format(calendar.getTime());
+        }
+
+        static String getLocalDate(String GMTDate) throws ParseException {
+            Date date = new SimpleDateFormat(DATE_TIME_SAVE_FORMAT, Locale.CANADA).parse(GMTDate);
+            String localDate = new SimpleDateFormat(DATE_TIME_OUTPUT_FORMAT, Locale.CANADA).format(date);
+            return localDate;
         }
     }
 
