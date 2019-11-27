@@ -6,11 +6,20 @@ public class SavedListItem {
     private String date;
     private String storeName;
     private String storeAddress;
+    private boolean toggleButtonChecked;
 
     SavedListItem(String date, String storeName, String storeAddress) {
         this.storeName = storeName;
         this.storeAddress = storeAddress;
         this.date = date;
+        this.toggleButtonChecked = false;
+    }
+    boolean isToggleButtonChecked() {
+        return toggleButtonChecked;
+    }
+
+    public void setToggleButtonChecked(boolean toggleButtonChecked) {
+        this.toggleButtonChecked = toggleButtonChecked;
     }
 
     String getStoreName() {

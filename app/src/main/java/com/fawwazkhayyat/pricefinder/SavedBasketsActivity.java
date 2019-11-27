@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
+import android.widget.ToggleButton;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -14,6 +18,7 @@ import java.util.ArrayList;
 public class SavedBasketsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
+    ToggleButton toggleButton_selectAll;
     //ArrayList<SavedListItem> savedListItems;
 
     @Override
@@ -28,7 +33,25 @@ public class SavedBasketsActivity extends AppCompatActivity {
         SavedBasketRecyclerViewAdapter adapter = new SavedBasketRecyclerViewAdapter(savedListItems);
         recyclerView.setAdapter(adapter);
 
+        toggleButton_selectAll = findViewById(R.id.toggleButton_selectAll);
+        //toggle check boxes of all list items
+        toggleButton_selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    for(int i=0;i<savedListItems.size();i++){
+                        savedListItems.get(i).setToggleButtonChecked(isChecked);
+                    }
+                    // https://stackoverflow.com/questions/43221847/cannot-call-this-method-while-recyclerview-is-computing-a-layout-or-scrolling-wh
+                    recyclerView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+            }
+        });
     }
+
 
     ArrayList<SavedListItem> getSavedLists(){
         ArrayList<SavedListItem> savedListItems = new ArrayList<>();
