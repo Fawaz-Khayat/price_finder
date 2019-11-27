@@ -43,7 +43,7 @@ public class SavedBasketRecyclerViewAdapter extends RecyclerView.Adapter<SavedBa
                 ToggleButton toggleButton_selectAll = parentConstraintLayout.findViewById(R.id.toggleButton_selectAll);
                 if(checkCounter==savedListItems.size())
                     toggleButton_selectAll.setChecked(true);
-                else if(checkCounter==0)
+                else if(checkCounter<savedListItems.size())
                     toggleButton_selectAll.setChecked(false);
             }
         });

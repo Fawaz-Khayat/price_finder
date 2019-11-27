@@ -35,19 +35,22 @@ public class SavedBasketsActivity extends AppCompatActivity {
 
         toggleButton_selectAll = findViewById(R.id.toggleButton_selectAll);
         //toggle check boxes of all list items
-        toggleButton_selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        toggleButton_selectAll.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    for(int i=0;i<savedListItems.size();i++){
-                        savedListItems.get(i).setToggleButtonChecked(isChecked);
+            public void onClick(View view) {
+                //this listener fires after the toggle button already changed the checked state
+                toggleButton_selectAll = (ToggleButton) view;
+                boolean isChecked = toggleButton_selectAll.isChecked();
+                for(int i=0;i<savedListItems.size();i++){
+                    savedListItems.get(i).setToggleButtonChecked(isChecked);
+                }
+                // https://stackoverflow.com/questions/43221847/cannot-call-this-method-while-recyclerview-is-computing-a-layout-or-scrolling-wh
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
                     }
-                    // https://stackoverflow.com/questions/43221847/cannot-call-this-method-while-recyclerview-is-computing-a-layout-or-scrolling-wh
-                    recyclerView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
+                });
             }
         });
     }
