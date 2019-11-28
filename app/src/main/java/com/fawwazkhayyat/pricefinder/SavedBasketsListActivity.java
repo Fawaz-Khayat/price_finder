@@ -1,6 +1,7 @@
 package com.fawwazkhayyat.pricefinder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -31,7 +33,8 @@ public class SavedBasketsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_saved_baskets);
 
         recyclerView = findViewById(R.id.recyclerView);
-        savedListItems = getSavedLists();
+        savedListItems = new ArrayList<>();
+        generateSavedLists();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new SavedBasketRecyclerViewAdapter(savedListItems);
         recyclerView.setAdapter(adapter);
@@ -60,22 +63,35 @@ public class SavedBasketsListActivity extends AppCompatActivity {
         });
     }
     public void delete_click(View view){
-        //todo
-        for(int i=0;i<savedListItems.size();i++){
-            if(savedListItems.get(i).isToggleButtonChecked()){
-                //todo
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+    for(int i=0;i<savedListItems.size();i++){
+        ToggleButton basketItemToggleButton =
+                recyclerView.getChildAt(i).findViewById(R.id.toggleButton_select);
+        if (basketItemToggleButton.isChecked()){
                 // delete the corresponding records from SQLite
+                db.delete(
+                        SQLiteContract.ListItems.TABLE_NAME,
+                        SQLiteContract.ListItems.COLUMN_NAME_LIST_ID + "= ?",
+                        new String[]{savedListItems.get(i).getListId_date()});
+                db.delete(
+                        SQLiteContract.Lists.TABLE_NAME,
+                        SQLiteContract.Lists.COLUMN_NAME_DATE_TIME + "= ?",
+                        new String[]{savedListItems.get(i).getListId_date()});
             }
-            //todo
-            // notify the adapter of the change
         }
+        db.close();
+        generateSavedLists();
+        adapter.notifyDataSetChanged();
         //todo
         // uncheck all toggle buttons
         // display message to user confirming the delete
+        Toast.makeText(this,"Deleted", Toast.LENGTH_SHORT).show();
     }
 
-    ArrayList<SavedListItem> getSavedLists(){
-        ArrayList<SavedListItem> savedListItems = new ArrayList<>();
+    void generateSavedLists(){
+        savedListItems.clear();
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor listsCursor = db.query(true,
@@ -85,22 +101,26 @@ public class SavedBasketsListActivity extends AppCompatActivity {
                 null,
                 null,
                 null,
-                "date_time",
+                SQLiteContract.Lists.COLUMN_NAME_DATE_TIME,
                 null);
         while (listsCursor.moveToNext()){
-            String listId_date = listsCursor.getString(listsCursor.getColumnIndexOrThrow("date_time"));
+            String listId_date = listsCursor.getString(
+                    listsCursor.getColumnIndexOrThrow(
+                            SQLiteContract.Lists.COLUMN_NAME_DATE_TIME));
             String localDate = null;
             try {
                 localDate = SQLiteContract.Lists.getLocalDate(listId_date);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            String storeId = listsCursor.getString(listsCursor.getColumnIndexOrThrow("store_id"));
+            String storeId = listsCursor.getString(
+                    listsCursor.getColumnIndexOrThrow(
+                            SQLiteContract.Lists.COLUMN_NAME_STORE_ID));
 
             Cursor storeCursor = db.query(true,
                     SQLiteContract.Stores.TABLE_NAME,
                     null,
-                    "_id = ?",
+                    SQLiteContract.Stores.COLUMN_NAME_STORE_ID + " = ?",
                     new String[]{storeId},
                     null,
                     null,
@@ -115,7 +135,6 @@ public class SavedBasketsListActivity extends AppCompatActivity {
         }
         listsCursor.close();
         db.close();
-        return savedListItems;
     }
 
     public void showSavedBasket(View view){
