@@ -4,19 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public class SavedBasketsActivity extends AppCompatActivity {
-
+public class SavedBasketsListActivity extends AppCompatActivity {
+    static final String EXTRA_LIST_ID = "com.fawwazkhayyat.pricefinder.LIST_ID";
     private RecyclerView recyclerView;
     private ToggleButton toggleButton_selectAll;
     private ArrayList<SavedListItem> savedListItems;
@@ -55,6 +59,20 @@ public class SavedBasketsActivity extends AppCompatActivity {
             }
         });
     }
+    public void delete_click(View view){
+        //todo
+        for(int i=0;i<savedListItems.size();i++){
+            if(savedListItems.get(i).isToggleButtonChecked()){
+                //todo
+                // delete the corresponding records from SQLite
+            }
+            //todo
+            // notify the adapter of the change
+        }
+        //todo
+        // uncheck all toggle buttons
+        // display message to user confirming the delete
+    }
 
     ArrayList<SavedListItem> getSavedLists(){
         ArrayList<SavedListItem> savedListItems = new ArrayList<>();
@@ -70,10 +88,10 @@ public class SavedBasketsActivity extends AppCompatActivity {
                 "date_time",
                 null);
         while (listsCursor.moveToNext()){
-            String date = listsCursor.getString(listsCursor.getColumnIndexOrThrow("date_time"));
+            String listId_date = listsCursor.getString(listsCursor.getColumnIndexOrThrow("date_time"));
             String localDate = null;
             try {
-                localDate = SQLiteContract.Lists.getLocalDate(date);
+                localDate = SQLiteContract.Lists.getLocalDate(listId_date);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -91,13 +109,22 @@ public class SavedBasketsActivity extends AppCompatActivity {
             storeCursor.moveToFirst();
             String storeName = storeCursor.getString(storeCursor.getColumnIndexOrThrow("name"));
             String address = storeCursor.getString(storeCursor.getColumnIndexOrThrow("address"));
-            SavedListItem savedListItem = new SavedListItem(localDate, storeName, address);
+            SavedListItem savedListItem = new SavedListItem(listId_date, localDate, storeName, address);
             savedListItems.add(savedListItem);
             storeCursor.close();
         }
-
         listsCursor.close();
         db.close();
         return savedListItems;
+    }
+
+    public void showSavedBasket(View view){
+        LinearLayout linearLayout_infoLayout = (LinearLayout) view;
+        TextView textView_listId_date =
+                linearLayout_infoLayout.findViewById(R.id.textView_listId_date);
+        String listId_date = textView_listId_date.getText().toString();
+        Intent intent = new Intent(this,SavedBasketActivity.class);
+        intent.putExtra(EXTRA_LIST_ID,listId_date);
+        startActivity(intent);
     }
 }

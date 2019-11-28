@@ -93,10 +93,7 @@ public class SelectStoreActivity extends AppCompatActivity {
     }
 
     public void gotoBasket_click(View view){
-        Intent intent = new Intent(this, BasketActivity.class);
-        // passing the BASKET_TYPE to basket activity
-        intent.putExtra(MainActivity.EXTRA_BASKET_TYPE,
-                getIntent().getStringExtra(MainActivity.EXTRA_BASKET_TYPE));
+        Intent intent = new Intent(this, NewBasketActivity.class);
         intent.putExtra(EXTRA_STORE_ID, storeId);
         intent.putExtra(EXTRA_STORE_NAME, storeName);
         intent.putExtra(EXTRA_STORE_ADDRESS, storeAddress);

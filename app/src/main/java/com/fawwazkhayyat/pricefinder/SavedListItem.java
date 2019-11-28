@@ -2,17 +2,25 @@ package com.fawwazkhayyat.pricefinder;
 
 public class SavedListItem {
 
-
-    private String date;
+    private String listId_date;
+    private String LocalDate;
     private String storeName;
     private String storeAddress;
     private boolean toggleButtonChecked;
 
-    SavedListItem(String date, String storeName, String storeAddress) {
+    SavedListItem(String listId_date, String localDate, String storeName, String storeAddress) {
+        this.listId_date = listId_date;
         this.storeName = storeName;
         this.storeAddress = storeAddress;
-        this.date = date;
+        this.LocalDate = localDate;
         this.toggleButtonChecked = false;
+    }
+    public String getListId_date() {
+        return listId_date;
+    }
+
+    public void setListId_date(String listId_date) {
+        this.listId_date = listId_date;
     }
     boolean isToggleButtonChecked() {
         return toggleButtonChecked;
@@ -30,12 +38,12 @@ public class SavedListItem {
         this.storeName = storeName;
     }
 
-    String getDate() {
-        return date;
+    String getLocalDate() {
+        return LocalDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setLocalDate(String date) {
+        this.LocalDate = date;
     }
 
     String getStoreAddress() {

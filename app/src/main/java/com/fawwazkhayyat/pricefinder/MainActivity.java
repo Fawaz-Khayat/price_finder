@@ -7,11 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-    static final String EXTRA_BASKET_TYPE = "com.fawwazkhayyat.pricefinder.BASKET_TYPE";
-    enum BASKET_TYPE {
-        NEW,
-        SAVED
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +16,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void new_click(View view){
         Intent  intent = new Intent(this, SelectStoreActivity.class);
-        intent.putExtra(EXTRA_BASKET_TYPE, BASKET_TYPE.NEW);
         startActivity(intent);
     }
 
     public void saved_click(View view){
-        Intent  intent = new Intent(this, SavedBasketsActivity.class);
-        intent.putExtra(EXTRA_BASKET_TYPE, BASKET_TYPE.SAVED);
+        Intent  intent = new Intent(this, SavedBasketsListActivity.class);
         startActivity(intent);
     }
 }
