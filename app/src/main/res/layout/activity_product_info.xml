@@ -82,7 +82,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/baseline_remove_black_48" />
+            app:srcCompat="@drawable/ic_remove_black_48dp" />
 
         <TextView
             android:id="@+id/textView_quantity"
@@ -104,7 +104,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/baseline_add_black_48" />
+            app:srcCompat="@drawable/ic_add_black_48dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
@@ -113,7 +113,7 @@
         android:layout_height="90dp"
         android:background="@android:drawable/screen_background_light_transparent"
         android:onClick="addToBasket_click"
-        android:src="@drawable/baseline_add_shopping_cart_black_48"
+        app:srcCompat="@drawable/ic_add_shopping_cart_black_48dp"
         app:layout_constraintBottom_toTopOf="@+id/textView_barcode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -34,7 +34,7 @@
                 android:background="@android:color/transparent"
                 android:onClick="saved_click"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/baseline_unarchive_black_48" />
+                app:srcCompat="@drawable/ic_unarchive_black_48dp" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -63,7 +63,7 @@
                 android:background="@android:color/transparent"
                 android:onClick="new_click"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/baseline_note_add_black_48" />
+                app:srcCompat="@drawable/ic_note_add_black_48dp" />
 
             <TextView
                 android:id="@+id/textView4"

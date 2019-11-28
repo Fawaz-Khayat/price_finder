@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="listItemBackground">#54BEF7D2</color>
     <color name="headerBackground">#540E9438</color>
+    <color name="icons">#00796B</color>
 </resources>
