@@ -95,6 +95,11 @@ public class SavedBasketActivity extends BasketActivity{
     }
 
     @Override
+    public void scan_click(View view) {
+
+    }
+
+    @Override
     public void item_click(View view){
 
     }

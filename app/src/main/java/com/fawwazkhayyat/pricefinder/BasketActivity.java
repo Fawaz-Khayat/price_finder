@@ -46,6 +46,7 @@ public abstract class BasketActivity extends AppCompatActivity {
     protected BasketRecyclerViewAdapter adapter;
 
     abstract public void save_click(View view);
+    abstract public void scan_click(View view);
     abstract public void item_click(View view);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
