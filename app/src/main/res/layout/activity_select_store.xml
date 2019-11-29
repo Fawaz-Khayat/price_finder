@@ -12,9 +12,10 @@
         android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="10dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -50,15 +51,17 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="256dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="32dp"
+    <ImageButton
+        android:id="@+id/imageButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
         android:onClick="gotoBasket_click"
-        android:text="Go To Basket"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_done_black_48dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
