@@ -1,5 +1,7 @@
 package com.fawwazkhayyat.pricefinder;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -7,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -86,7 +89,8 @@ public class SelectStoreActivity extends AppCompatActivity {
         for(int i=0;i<numberOfStores;i++){
             storeNames[i] = stores[i].getName();
         }
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this ,
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this ,
                 R.layout.support_simple_spinner_dropdown_item,
                 storeNames);
         spinner_selectStore.setAdapter(arrayAdapter);
