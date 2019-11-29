@@ -42,7 +42,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Saved List"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="@dimen/iconCaption" />
         </LinearLayout>
 
         <LinearLayout
@@ -71,7 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="New"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="@dimen/iconCaption" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
