@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".SelectStoreActivity">
 
     <LinearLayout
@@ -38,7 +39,7 @@
             android:id="@+id/imageView_store"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:srcCompat="@android:drawable/ic_popup_sync" />
 
     </LinearLayout>
 

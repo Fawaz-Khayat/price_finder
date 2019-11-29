@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".BasketActivity">
 
     <LinearLayout
@@ -50,7 +51,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="#46CCDDCC"
+        android:background="@color/listItemBackground"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="5dp"
@@ -146,9 +147,9 @@
             android:onClick="scan_click"
             android:rotation="90"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_format_align_justify_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_format_align_justify_black_24dp" />
 
         <ImageButton
             android:id="@+id/imageButton_save"
@@ -160,10 +161,10 @@
             android:background="@android:color/transparent"
             android:onClick="save_click"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_save_black_48dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_save_black_48dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

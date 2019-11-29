@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:padding="25dp"
     tools:context=".ProductInfoActivity">
 
@@ -75,9 +76,9 @@
 
         <ImageButton
             android:id="@+id/imageButton_minus"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:background="@android:drawable/screen_background_light_transparent"
             android:onClick="decrease_click"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -97,9 +98,9 @@
 
         <ImageButton
             android:id="@+id/imageButton_plus"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:background="@android:drawable/screen_background_light_transparent"
             android:onClick="increase_click"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -109,14 +110,14 @@
 
     <ImageButton
         android:id="@+id/imageButton_addToBasket"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:background="@android:drawable/screen_background_light_transparent"
         android:onClick="addToBasket_click"
-        app:srcCompat="@drawable/ic_add_shopping_cart_black_48dp"
         app:layout_constraintBottom_toTopOf="@+id/textView_barcode"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_add_shopping_cart_black_48dp" />
 
     <TextView
         android:id="@+id/textView_barcode"
