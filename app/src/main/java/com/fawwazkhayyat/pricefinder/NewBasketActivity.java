@@ -90,30 +90,31 @@ public class NewBasketActivity extends BasketActivity {
                         textView_result.setText("Sorry! Product was not found in this store!");
                         break;
 
-                        default:
-                    Product product = new Product(data.getStringExtra(ProductInfoActivity.EXTRA_BARCODE));
-                    product.setName(data.getStringExtra(ProductInfoActivity.EXTRA_NAME));
-                    product.setDescription(data.getStringExtra(ProductInfoActivity.EXTRA_DESCRIPTION));
-                    product.setPrice(data.getDoubleExtra(ProductInfoActivity.EXTRA_PRICE, 0.0));
-                    if (data.hasExtra(ProductInfoActivity.EXTRA_IS_TAXABLE)) {
-                        product.setTaxable(data.getBooleanExtra(ProductInfoActivity.EXTRA_IS_TAXABLE, true));
-                        if (product.isTaxable())
-                            product.setTax(storeTax);
-                    } else
-                        Log.d("DEBUG_TAG", "onActivityResult: data has no EXTRA_IS_TAXABLE");
-                    //todo
-                    // handle the case of no taxable information
-                    product.setQuantity(data.getIntExtra(ProductInfoActivity.EXTRA_QUANTITY, 0));
-                    product.setImageRefPath(data.getStringExtra(ProductInfoActivity.EXTRA_IMAGE_PATH));
-                    products.add(product);
-                    adapter.notifyItemInserted(products.size());
+                    default:
+                        Product product = new Product(data.getStringExtra(ProductInfoActivity.EXTRA_BARCODE));
+                        product.setName(data.getStringExtra(ProductInfoActivity.EXTRA_NAME));
+                        product.setDescription(data.getStringExtra(ProductInfoActivity.EXTRA_DESCRIPTION));
+                        product.setPrice(data.getDoubleExtra(ProductInfoActivity.EXTRA_PRICE, 0.0));
+                        if (data.hasExtra(ProductInfoActivity.EXTRA_IS_TAXABLE)) {
+                            product.setTaxable(data.getBooleanExtra(ProductInfoActivity.EXTRA_IS_TAXABLE, true));
+                            if (product.isTaxable())
+                                product.setTax(storeTax);
+                        } else
+                            Log.d("DEBUG_TAG", "onActivityResult: data has no EXTRA_IS_TAXABLE");
+                        //todo
+                        // handle the case of no taxable information
+                        product.setQuantity(data.getIntExtra(ProductInfoActivity.EXTRA_QUANTITY, 0));
+                        product.setImageRefPath(data.getStringExtra(ProductInfoActivity.EXTRA_IMAGE_PATH));
+                        products.add(product);
+                        adapter.notifyItemInserted(products.size());
 
-                    recalculateBasket();
-                    ImageButton imageButton_save = findViewById(R.id.imageButton_save);
-                    imageButton_save.setEnabled(true);
-                    imageButton_save.setAlpha((float) 1.0);
-                    break;
+                        recalculateBasket();
+                        ImageButton imageButton_save = findViewById(R.id.imageButton_save);
+                        imageButton_save.setEnabled(true);
+                        imageButton_save.setAlpha((float) 1.0);
+                        break;
                 }
+                break;
             // request code for edited product info
             case REQUEST_CODE_EDIT:
                 if(resultCode == RESULT_CANCELED)
