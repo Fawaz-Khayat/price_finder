@@ -11,15 +11,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewBasketActivity" />
-        <activity android:name=".SavedBasketActivity" />
-        <activity android:name=".SavedBasketsListActivity" />
-        <activity android:name=".ProductInfoEditorActivity" />
-        <activity android:name=".ProductInfoGetterActivity" />
-        <activity android:name=".ProductInfoActivity" />
-        <activity android:name=".BasketActivity" />
-        <activity android:name=".SelectStoreActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".NewBasketActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SavedBasketActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SavedBasketsListActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ProductInfoEditorActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ProductInfoGetterActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ProductInfoActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".BasketActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SelectStoreActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,6 +54,7 @@
         </activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:configChanges="orientation"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
     </application>
