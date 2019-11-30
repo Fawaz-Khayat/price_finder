@@ -11,6 +11,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class ProductInfoGetterActivity extends ProductInfoActivity {
+    static final int RESULT_FOUND = 1001;
+    static final int RESULT_NOT_FOUND = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public class ProductInfoGetterActivity extends ProductInfoActivity {
                 populateProductInfo();
             }
             else{
-                setResult(RESULT_CANCELED);
+                setResult(RESULT_NOT_FOUND);
                 finish();
             }
         });
@@ -46,7 +48,7 @@ public class ProductInfoGetterActivity extends ProductInfoActivity {
         intent.putExtra(EXTRA_PRICE,price);
         intent.putExtra(EXTRA_IS_TAXABLE,isTaxable);
         intent.putExtra(EXTRA_IMAGE_PATH,imagePath);
-        setResult(RESULT_OK, intent);
+        setResult(RESULT_FOUND, intent);
         finish();
     }
 }

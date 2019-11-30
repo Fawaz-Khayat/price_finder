@@ -16,7 +16,6 @@ import com.google.firebase.storage.StorageReference;
 //todo
 // rewrite the class to only get information of newly added prodects
 public abstract class ProductInfoActivity extends AppCompatActivity {
-    static final int RESULT_CODE = 1001;
     static final String EXTRA_BARCODE = "com.fawwazkhayyat.pricefinder.BARCODE";
     static final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder.NAME";
     static final String EXTRA_DESCRIPTION = "com.fawwazkhayyat.pricefinder.DESCRIPTION";
