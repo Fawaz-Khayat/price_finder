@@ -115,6 +115,8 @@ public class NewBasketActivity extends BasketActivity {
                 break;
             // request code for edited product info
             case REQUEST_CODE_EDIT:
+                if(resultCode == RESULT_CANCELED)
+                    break;
                 int position = data.getIntExtra(ProductInfoEditorActivity.EXTRA_POSITION,-1);
                 int quantity = data.getIntExtra(ProductInfoEditorActivity.EXTRA_QUANTITY, -1);
                 //todo
