@@ -2,4 +2,5 @@
 <resources>
 <dimen name="iconCaption">18sp</dimen>
     <dimen name="header">24sp</dimen>
+    <dimen name="subHeader">20sp</dimen>
 </resources>

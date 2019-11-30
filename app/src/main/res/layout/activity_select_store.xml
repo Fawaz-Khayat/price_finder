@@ -44,7 +44,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:text="Name"
-            android:textSize="@dimen/header" />
+            android:textSize="@dimen/subHeader" />
 
         <TextView
             android:id="@+id/textView_address"
@@ -53,7 +53,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:text="Address"
-            android:textSize="@dimen/header" />
+            android:textSize="@dimen/subHeader" />
 
         <ImageView
             android:id="@+id/imageView_store"
