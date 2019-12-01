@@ -53,9 +53,6 @@ public class SavedBasketRecyclerViewAdapter extends RecyclerView.Adapter<SavedBa
                     toggleButton_selectAll.setChecked(false);
             }
         });
-
-        //todo
-        // add listener for clicking on the item's Layout, to display the corresponding baskets
         return new ViewHolder(constraintLayout);
     }
 

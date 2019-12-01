@@ -85,7 +85,6 @@ public class SavedBasketsListActivity extends AppCompatActivity {
         generateSavedLists();
         adapter.notifyDataSetChanged();
         //todo
-        // uncheck all toggle buttons
         // display message to user confirming the delete
         Toast.makeText(this,"Deleted", Toast.LENGTH_SHORT).show();
     }

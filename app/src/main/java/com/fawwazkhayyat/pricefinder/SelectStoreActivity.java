@@ -61,7 +61,7 @@ public class SelectStoreActivity extends AppCompatActivity {
                     storeName = stores[position].getName();
                     tax = stores[position].getTax();
                     //todo
-                    //add more info: Name, address, ...
+                    // add more info: Name, address, ...
                     textView_name.setText(storeName);
                     textView_address.setText(storeAddress);
 
@@ -72,8 +72,6 @@ public class SelectStoreActivity extends AppCompatActivity {
                     GlideApp.with(view.getContext())
                             .load(imageRef)
                             .into(imageView_store);
-                    //todo
-                    // have a placeholder image while the store image loading
                 }
 
                 @Override

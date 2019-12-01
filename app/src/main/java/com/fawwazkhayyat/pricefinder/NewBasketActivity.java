@@ -195,8 +195,6 @@ public class NewBasketActivity extends BasketActivity {
         imageButton_save.setEnabled(false);
         imageButton_save.setAlpha((float)0.4);
         String list_id;
-        //todo
-        // save basket items to the local SQLite database
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 

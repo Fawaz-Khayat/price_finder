@@ -16,7 +16,7 @@ class SharedDataSingleton {
     private SharedDataSingleton() {
     }
 
-    // todo
+    //todo
     // date save format
     // the new date
     // store id
