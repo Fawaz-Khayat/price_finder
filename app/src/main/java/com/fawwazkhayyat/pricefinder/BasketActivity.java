@@ -45,8 +45,6 @@ public abstract class BasketActivity extends AppCompatActivity {
 
     protected RecyclerView recyclerView;
     protected TextView textView_result, textView_tax, textView_subtotal, textView_total;
-
-    //final SharedDataSingleton singleton = SharedDataSingleton.getInstance();
     protected ArrayList<Product> products;
     protected String storeId, storeName, storeAddress;
     protected double subTotal, totalTax, total, storeTax;
