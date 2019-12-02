@@ -24,7 +24,6 @@ public abstract class BasketActivity extends AppCompatActivity {
     static final int REQUEST_CODE_EDIT = 1100;
     final String STATE_SUBTOTAL = "SUBTOTAL";
     final String STATE_TOTAL_TAX = "TOTAL_TAX";
-    final String STATE_SUB_TOTAL = "SUB_TOTAL";
     final String STATE_TOTAL = "TOTAL";
     final String TAG = "DEBUG_TAG_BASKET";
 
@@ -84,7 +83,7 @@ public abstract class BasketActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         Log.d(TAG, "onRestoreInstanceState: ");
 
-        subTotal = savedInstanceState.getDouble(STATE_SUB_TOTAL);
+        subTotal = savedInstanceState.getDouble(STATE_SUBTOTAL);
         totalTax = savedInstanceState.getDouble(STATE_TOTAL_TAX);
         total = savedInstanceState.getDouble(STATE_TOTAL);
         textView_result.setText(savedInstanceState.getString("textView_result"));
@@ -98,7 +97,7 @@ public abstract class BasketActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState: ");
 
-        outState.putDouble(STATE_SUB_TOTAL,subTotal);
+        outState.putDouble(STATE_SUBTOTAL,subTotal);
         outState.putDouble(STATE_TOTAL_TAX, totalTax);
         outState.putDouble(STATE_TOTAL, total);
         outState.putString("textView_result",textView_result.getText().toString());
