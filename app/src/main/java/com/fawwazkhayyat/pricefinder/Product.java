@@ -3,10 +3,6 @@ package com.fawwazkhayyat.pricefinder;
 //https://stackoverflow.com/questions/6201311/how-to-read-write-a-boolean-when-implementing-the-parcelable-interface
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
-
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class Product implements Parcelable {
     private String barcode;

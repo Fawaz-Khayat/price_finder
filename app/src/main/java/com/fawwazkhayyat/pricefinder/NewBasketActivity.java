@@ -1,7 +1,5 @@
 package com.fawwazkhayyat.pricefinder;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,12 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 public class NewBasketActivity extends BasketActivity {
 

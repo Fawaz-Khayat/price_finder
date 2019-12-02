@@ -4,11 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
 import androidx.lifecycle.ViewModelProviders;
-
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class ProductInfoGetterActivity extends ProductInfoActivity {
     static final int RESULT_FOUND = 1001;

@@ -2,9 +2,6 @@ package com.fawwazkhayyat.pricefinder;
 
 import com.google.firebase.firestore.GeoPoint;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Store {
     private String id;
     private String name;

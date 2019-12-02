@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
-
 public class SavedBasketActivity extends BasketActivity{
 
     @Override
