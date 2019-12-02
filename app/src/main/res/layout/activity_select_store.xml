@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:text="PLEASE SELECT A STORE"
         android:textAlignment="center"
+        android:textColor="@color/header"
         android:textSize="@dimen/header"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +45,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:text="Name"
+            android:textColor="@color/subHeader"
             android:textSize="@dimen/subHeader" />
 
         <TextView
@@ -53,6 +55,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:text="Address"
+            android:textColor="@color/subHeader"
             android:textSize="@dimen/subHeader" />
 
         <ImageView
