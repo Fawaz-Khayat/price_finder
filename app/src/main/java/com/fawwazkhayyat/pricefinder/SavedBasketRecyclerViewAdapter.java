@@ -17,7 +17,7 @@ public class SavedBasketRecyclerViewAdapter extends RecyclerView.Adapter<SavedBa
     private ArrayList<SavedListItem> savedListItems;
     private int checkCounter;
 
-    public SavedBasketRecyclerViewAdapter(ArrayList<SavedListItem> savedListItems) {
+    SavedBasketRecyclerViewAdapter(ArrayList<SavedListItem> savedListItems) {
         this.savedListItems = savedListItems;
         checkCounter = 0;
     }
@@ -82,9 +82,9 @@ public class SavedBasketRecyclerViewAdapter extends RecyclerView.Adapter<SavedBa
         return savedListItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
         ConstraintLayout constraintLayout;
-        public ViewHolder(@NonNull ConstraintLayout constraintLayout) {
+        ViewHolder(@NonNull ConstraintLayout constraintLayout) {
             super(constraintLayout);
             this.constraintLayout = constraintLayout;
         }

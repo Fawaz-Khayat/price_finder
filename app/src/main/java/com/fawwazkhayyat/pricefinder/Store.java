@@ -27,11 +27,11 @@ public class Store {
         this.name = name;
     }
 
-    public String getAddress() {
+    String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    void setAddress(String address) {
         this.address = address;
     }
 
@@ -39,7 +39,7 @@ public class Store {
         return country;
     }
 
-    public void setCountry(String country) {
+    void setCountry(String country) {
         this.country = country;
     }
 
@@ -47,7 +47,7 @@ public class Store {
         return province;
     }
 
-    public void setProvince(String province) {
+    void setProvince(String province) {
         this.province = province;
     }
 
@@ -55,15 +55,15 @@ public class Store {
         return geoPoint;
     }
 
-    public void setGeopoint(GeoPoint geopoint) {
+    void setGeopoint(GeoPoint geopoint) {
         this.geoPoint = geopoint;
     }
 
-    public double getTax() {
+    double getTax() {
         return tax;
     }
 
-    public void setTax(double tax) {
+    void setTax(double tax) {
         this.tax = tax;
     }
 }

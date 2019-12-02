@@ -15,7 +15,7 @@ public class SavedListItem {
         this.LocalDate = localDate;
         this.toggleButtonChecked = false;
     }
-    public String getListId_date() {
+    String getListId_date() {
         return listId_date;
     }
 
@@ -26,7 +26,7 @@ public class SavedListItem {
         return toggleButtonChecked;
     }
 
-    public void setToggleButtonChecked(boolean toggleButtonChecked) {
+    void setToggleButtonChecked(boolean toggleButtonChecked) {
         this.toggleButtonChecked = toggleButtonChecked;
     }
 

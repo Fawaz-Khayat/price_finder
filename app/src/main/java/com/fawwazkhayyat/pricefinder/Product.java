@@ -80,19 +80,19 @@ public class Product implements Parcelable {
         this.price = price;
     }
 
-    public boolean isTaxable() {
+    boolean isTaxable() {
         return isTaxable;
     }
 
-    public void setTaxable(boolean taxable) {
+    void setTaxable(boolean taxable) {
         isTaxable = taxable;
     }
 
-    public double getTax() {
+    double getTax() {
         return tax;
     }
 
-    public void setTax(double tax) {
+    void setTax(double tax) {
         this.tax = tax;
     }
 
@@ -104,19 +104,19 @@ public class Product implements Parcelable {
         this.description = description;
     }
 
-    public int getQuantity() {
+    int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public String getImageRefPath() {
+    String getImageRefPath() {
         return imageRefPath;
     }
 
-    public void setImageRefPath(String imageRefPath) {
+    void setImageRefPath(String imageRefPath) {
         this.imageRefPath = imageRefPath;
     }
 }

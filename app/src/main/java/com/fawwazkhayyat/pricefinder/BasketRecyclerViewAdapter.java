@@ -16,7 +16,7 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
     private ArrayList<Product> products;
     static final int KEY_POSITION = 1;
 
-    public BasketRecyclerViewAdapter(ArrayList<Product> products){
+    BasketRecyclerViewAdapter(ArrayList<Product> products){
         super();
         this.products = products;
     }
@@ -66,9 +66,9 @@ public class BasketRecyclerViewAdapter extends RecyclerView.Adapter<BasketRecycl
         return products.size();
     }
 
-    public static class BasketRecyclerViewHolder extends RecyclerView.ViewHolder {
+    static class BasketRecyclerViewHolder extends RecyclerView.ViewHolder {
         LinearLayout linearLayout;
-        public BasketRecyclerViewHolder(@NonNull LinearLayout linearLayout) {
+        BasketRecyclerViewHolder(@NonNull LinearLayout linearLayout) {
             super(linearLayout);
             this.linearLayout = linearLayout;
         }

@@ -79,8 +79,8 @@ public class SelectStoreActivity extends AppCompatActivity {
         for(int i=0;i<numberOfStores;i++){
             storeNames[i] = stores[i].getName();
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this ,
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+                this,
                 R.layout.support_simple_spinner_dropdown_item,
                 storeNames);
         spinner_selectStore.setAdapter(arrayAdapter);
