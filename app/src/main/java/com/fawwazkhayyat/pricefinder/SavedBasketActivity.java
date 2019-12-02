@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class SavedBasketActivity extends BasketActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: inside SavedBasketActivity");
 
         findViewById(R.id.imageButton_save).setVisibility(View.GONE);
         findViewById(R.id.imageButton_scan).setVisibility(View.GONE);

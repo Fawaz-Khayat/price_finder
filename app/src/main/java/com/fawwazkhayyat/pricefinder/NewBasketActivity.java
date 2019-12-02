@@ -22,6 +22,7 @@ public class NewBasketActivity extends BasketActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: inside NewBasketActivity");
 
 
         ImageButton imageButton_save = findViewById(R.id.imageButton_save);

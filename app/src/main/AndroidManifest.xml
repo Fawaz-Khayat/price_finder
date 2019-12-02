@@ -12,13 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".NewBasketActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:name=".NewBasketActivity" />
         <activity
-            android:name=".SavedBasketActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:name=".SavedBasketActivity" />
         <activity
             android:name=".SavedBasketsListActivity"
             android:configChanges="orientation"
@@ -36,9 +32,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".BasketActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:name=".BasketActivity" />
         <activity
             android:name=".SelectStoreActivity"
             android:configChanges="orientation"

@@ -23,12 +23,11 @@ import java.util.Arrays;
 
 
 public class SelectStoreActivity extends AppCompatActivity {
-    //final String EXTRA_BASKET_TYPE = "com.fawwazkhayyat.pricefinder.BASKET_TYPE";
     static final String EXTRA_STORE_ID = "com.fawwazkhayyat.pricefinder.STORE_ID";
     static final String EXTRA_STORE_NAME = "com.fawwazkhayyat.pricefinder.STORE_NAME";
     static final String EXTRA_STORE_ADDRESS = "com.fawwazkhayyat.pricefinder.STORE_ADDRESS";
     static final String EXTRA_STORE_TAX = "com.fawwazkhayyat.pricefinder.STORE_TAX";
-    final String TAG = "DEBUG_TAG";
+    final String TAG = "DEBUG_TAG_SELECT_STORE";
 
     private String storeId, storeName, storeAddress;
     private double tax;
@@ -41,6 +40,7 @@ public class SelectStoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_store);
+        Log.d(TAG, "onCreate: ");
 
         spinner_selectStore = findViewById(R.id.spinner_selectStore);
         textView_name = findViewById(R.id.textView_name);
