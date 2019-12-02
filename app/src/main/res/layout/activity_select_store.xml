@@ -68,12 +68,12 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:scaleType="fitCenter"
         android:background="@android:color/transparent"
         android:onClick="gotoBasket_click"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_done_black_48dp" />
+        app:srcCompat="@drawable/ic_shopping_cart_black_48dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
