@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ public class SavedBasketsListActivity extends AppCompatActivity {
     static final String EXTRA_LIST_ID = "com.fawwazkhayyat.pricefinder.LIST_ID";
     private RecyclerView recyclerView;
     private ToggleButton toggleButton_selectAll;
+    private ImageButton imageButton_delete;
     private ArrayList<SavedListItem> savedListItems;
     private SavedBasketRecyclerViewAdapter adapter;
     @Override
@@ -39,10 +41,19 @@ public class SavedBasketsListActivity extends AppCompatActivity {
         adapter = new SavedBasketRecyclerViewAdapter(savedListItems);
         recyclerView.setAdapter(adapter);
 
+        imageButton_delete = findViewById(R.id.imageButton_delete);
+        disableButton(imageButton_delete);
         toggleButton_selectAll = findViewById(R.id.toggleButton_selectAll);
-
     }
 
+    private void disableButton(View view){
+        view.setEnabled(false);
+        view.setAlpha((float) 0.4);
+    }
+    private void enableButton(View view){
+        view.setEnabled(true);
+        view.setAlpha((float) 1.0);
+    }
     /**
      * toggle check boxes of all list items
      * @param view toggleButton_selectAll
@@ -51,6 +62,12 @@ public class SavedBasketsListActivity extends AppCompatActivity {
         //this listener fires after the toggle button already changed the checked state
         toggleButton_selectAll = (ToggleButton) view;
         boolean isChecked = toggleButton_selectAll.isChecked();
+        //at lease one item selected, enable delete button
+        if(isChecked)
+            enableButton(imageButton_delete);
+        //no item selected, disable delete button
+        else
+            disableButton(imageButton_delete);
         for(int i=0;i<savedListItems.size();i++){
             savedListItems.get(i).setToggleButtonChecked(isChecked);
         }
@@ -84,8 +101,6 @@ public class SavedBasketsListActivity extends AppCompatActivity {
         db.close();
         generateSavedLists();
         adapter.notifyDataSetChanged();
-        //todo
-        // display message to user confirming the delete
         Toast.makeText(this,"Deleted", Toast.LENGTH_SHORT).show();
     }
 

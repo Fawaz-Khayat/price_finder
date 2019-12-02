@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,9 @@ public class SavedBasketRecyclerViewAdapter extends RecyclerView.Adapter<SavedBa
     public SavedBasketRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ConstraintLayout constraintLayout = (ConstraintLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.saved_baskets_item, parent, false);
+        final ConstraintLayout parentConstraintLayout = (ConstraintLayout) parent.getParent();
+        final ImageButton imageButton_delete = parentConstraintLayout.findViewById(R.id.imageButton_delete);
+        final ToggleButton toggleButton_selectAll = parentConstraintLayout.findViewById(R.id.toggleButton_selectAll);
 
         ToggleButton toggleButton = constraintLayout.findViewById(R.id.toggleButton_select);
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -44,11 +48,19 @@ public class SavedBasketRecyclerViewAdapter extends RecyclerView.Adapter<SavedBa
                     checkCounter++;
                 else
                     checkCounter--;
+                //set the delete button at the header
+                if(checkCounter>0){
+                    imageButton_delete.setEnabled(true);
+                    imageButton_delete.setAlpha((float)1.0);
+                }
+                else{
+                    imageButton_delete.setEnabled(false);
+                    imageButton_delete.setAlpha((float)0.4);
+                }
                 //set the toggleButton at the header
-                ConstraintLayout parentConstraintLayout = (ConstraintLayout) parent.getParent();
-                ToggleButton toggleButton_selectAll = parentConstraintLayout.findViewById(R.id.toggleButton_selectAll);
                 if(checkCounter==savedListItems.size())
                     toggleButton_selectAll.setChecked(true);
+
                 else if(checkCounter<savedListItems.size())
                     toggleButton_selectAll.setChecked(false);
             }
