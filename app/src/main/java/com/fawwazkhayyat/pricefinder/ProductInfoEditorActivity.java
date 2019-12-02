@@ -22,7 +22,7 @@ public class ProductInfoEditorActivity extends ProductInfoActivity {
         imagePath = intent.getStringExtra(BasketActivity.EXTRA_IMAGE_PATH);
         position = intent.getIntExtra(BasketActivity.EXTRA_POSITION,-1);
 
-        minmumQuantity = 0;
+        minimumQuantity = 0;
         //todo
         // check if position is < 0
         populateProductInfo();
