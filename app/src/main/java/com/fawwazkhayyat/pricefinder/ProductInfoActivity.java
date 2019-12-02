@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-//todo
-// rewrite the class to only get information of newly added prodects
 public abstract class ProductInfoActivity extends AppCompatActivity {
     static final String EXTRA_BARCODE = "com.fawwazkhayyat.pricefinder.BARCODE";
     static final String EXTRA_NAME = "com.fawwazkhayyat.pricefinder.NAME";
@@ -66,9 +64,6 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
         description = product.getDescription();
         price = product.getPrice();
         isTaxable = product.isTaxable();
-        //todo
-        // review this
-        //imagePath = product.getImageRefPath();
     }
     protected void populateProductInfo(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -85,8 +80,4 @@ public abstract class ProductInfoActivity extends AppCompatActivity {
         textView_quantity.setText(String.valueOf(quantity));
         textView_barcode.setText(barcode);
     }
-
-    //todo
-    // temporary disable add to basket button
-    // enable add to basket button
 }

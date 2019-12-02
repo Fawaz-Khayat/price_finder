@@ -60,8 +60,6 @@ public class SelectStoreActivity extends AppCompatActivity {
                     storeAddress = stores[position].getAddress();
                     storeName = stores[position].getName();
                     tax = stores[position].getTax();
-                    //todo
-                    // add more info: Name, address, ...
                     textView_name.setText(storeName);
                     textView_address.setText(storeAddress);
 

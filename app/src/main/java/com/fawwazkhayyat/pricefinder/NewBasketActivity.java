@@ -55,10 +55,6 @@ public class NewBasketActivity extends BasketActivity {
                         Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
                     } else {
                         String barcode = result.getContents();
-                        //todo
-                        // remove manual assignment to barcode
-                        //762111898173 in ub store
-                        //barcode = "762111898173";
                         String barcodeType = result.getFormatName();
                         // check if the product already in the basket
                         // if already in the basket, edit
@@ -68,8 +64,6 @@ public class NewBasketActivity extends BasketActivity {
                             getProductInfo(storeId, barcode, barcodeType);
                         else
                             editProduct(productIndex);
-                        //todo
-                        // remove textView_result from layout
                         textView_result.setText(barcode);
                     }
                 } else {
