@@ -94,7 +94,7 @@ class SQLiteContract {
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
-                        COLUMN_NAME_LIST_ID + " INTEGER NOT NULL, " +
+                        COLUMN_NAME_LIST_ID + " TEXT NOT NULL, " +
                         COLUMN_NAME_BARCODE + " TEXT NOT NULL, " +
                         COLUMN_NAME_PRICE + " REAL, " +
                         COLUMN_NAME_QUANTITY + " INTEGER, " +
