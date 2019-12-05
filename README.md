@@ -9,7 +9,7 @@
 * **End Users:** Customers who are physically in the store.
 
 ## What is this app not about?
-This app is not about finding the lowest price. The idea of the app is similar to the physical barcode scanners found in stores as shown below. The app is meant to provide an alternative option for the customers to find the price. In addition to that, the app calculates the total cost of the items in the cart.
+This app is not about finding the lowest price. The idea of the app is similar to the physical barcode scanners found in stores. The app is meant to provide an alternative option for the customers to find the price. In addition to that, the app calculates the total cost of the items in the cart.
 
 ## Required System Permissions:
 * Internet
